@@ -84,12 +84,12 @@
     </x-slot>
 
     <x-slot name="actions">
+        <x-button >
+            {{ __('Save') }}
+        </x-button>
+
         <x-action-message class="mr-3" on="saved">
             {{ __('Saved.') }}
         </x-action-message>
-
-        <x-button wire:loading.attr="disabled" wire:target="photo">
-            {{ __('Save') }}
-        </x-button>
     </x-slot>
 </x-form-section>

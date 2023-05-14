@@ -58,4 +58,34 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
+    public function alert() // unread notifications
+    {
+        return $this->hasOne(Alert::class); // 1:1 relationship
+    }
+
+    public function history()
+    {
+        return $this->belongsToMany(Video::class , 'video_user' , 'user_id' , 'video_id')->withTimestamps()->withPivot('id'); // video_user pivot table user can watch many videos and video can be watched by many users
+    }
 }
