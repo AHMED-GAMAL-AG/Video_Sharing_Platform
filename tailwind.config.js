@@ -19,5 +19,14 @@ export default {
         },
     },
 
+
+
     plugins: [forms, typography],
+};
+
+module.exports = {
+    blocklist: [
+        'container',
+        'collapse',
+    ],
 };
