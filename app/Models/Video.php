@@ -9,6 +9,15 @@ class Video extends Model
 {
     use HasFactory;
 
+
+    protected $fillable = [
+        'disk',
+        'video_path',
+        'image_path',
+        'title',
+        'user_id',
+    ];
+
     public function user() // upload a video belongs to a user
     {
         return $this->belongsTo(User::class);
