@@ -47,7 +47,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{route('videos.create')}}" class="nav-link">
                             <i class="fas fa-upload"></i>
                             {{ __('رفع الفيديوهات') }}
                         </a>
