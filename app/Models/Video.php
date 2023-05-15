@@ -36,6 +36,6 @@ class Video extends Model
 
     public function users() // user can watch many videos
     {
-        return $this->belongsToMany(User::class , 'video_user' , 'video_id' , 'user_id')->withTimestamps()->withPivot('id'); // video_user pivot table user can watch many videos and video can be watched by many users
+        return $this->belongsToMany(Video::class , 'video_user' , 'video_id' , 'user_id')->withTimestamps()->withPivot('id'); // video_user pivot table user can watch many videos and video can be watched by many users
     }
 }
