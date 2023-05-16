@@ -10,6 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use FFMpeg\Coordinate\Dimension;
+use FFMpeg\Format\Video\WebM;
 use FFMpeg\Format\Video\X264;
 use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg as SupportFFMpeg;
 
@@ -21,11 +22,46 @@ class ConvertVideoForStreaming implements ShouldQueue
      * Create a new job instance.
      */
 
-    public $video;
+    public $video, $format, $width, $hight;
 
     public function __construct(Video $video) // get the video model sent from the VideoController
     {
         $this->video = $video;
+    }
+
+
+    protected function convertVideo($loop_count)
+    {
+        $this->format = [
+            [
+                (new X264('aac', 'libx264'))->setKiloBitrate(4096), // 1080p mp4
+                (new WebM('libvorbis', 'libvpx'))->setKiloBitrate(4096), // 1080p webm
+            ],
+
+            [
+                (new X264('aac', 'libx264'))->setKiloBitrate(2048), // 720 mp4
+                (new WebM('libvorbis', 'libvpx'))->setKiloBitrate(2048), // 720 webm
+            ],
+
+            [
+                (new X264('aac', 'libx264'))->setKiloBitrate(750), // 480 mp4
+                (new WebM('libvorbis', 'libvpx'))->setKiloBitrate(750), // 480 webm
+            ],
+
+            [
+                (new X264('aac', 'libx264'))->setKiloBitrate(500), // 360 mp4
+                (new WebM('libvorbis', 'libvpx'))->setKiloBitrate(500), // 360 webm
+            ],
+
+            [
+                (new X264('aac', 'libx264'))->setKiloBitrate(300), // 240 mp4
+                (new WebM('libvorbis', 'libvpx'))->setKiloBitrate(300), // 240 webm
+            ]
+        ];
+
+        // 1080, 720, 480, 360, 240
+        $this->width = [1920, 1280, 854, 640, 426];
+        $this->hight = [1080, 720, 480, 360, 240];
     }
 
     /**
@@ -33,7 +69,6 @@ class ConvertVideoForStreaming implements ShouldQueue
      */
     public function handle(): void
     {
-
         $low_BitrateFormat = (new X264('aac', 'libx264'))->setKiloBitrate(500); // 240p
         $low2_BitrateFormat = (new X264('aac', 'libx264'))->setKiloBitrate(900); // 360p
         $medium_BitrateFormat = (new X264('aac', 'libx264'))->setKiloBitrate(1500); // 480p
