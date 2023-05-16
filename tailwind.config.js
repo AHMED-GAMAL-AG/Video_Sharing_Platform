@@ -22,11 +22,7 @@ export default {
 
 
     plugins: [forms, typography],
+    blocklist: ["container", "collapse"],
 };
 
-module.exports = {
-    blocklist: [
-        'container',
-        'collapse',
-    ],
-};
+

@@ -74,25 +74,6 @@
                 </ul>
 
                 <ul class="navbar-nav mr-auto">
-                    {{-- <div class="topbar" style="z-index:1">
-                        @auth
-                            <!-- Nav Item - Alerts -->
-                            <li class="nav-item dropdown no-arrow alert-dropdown mx-1">
-                                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-bell fa-fw fa-lg"></i>
-                                    <!-- Counter - Alerts -->
-                                    <span class="badge badge-danger badge-counter notif-count" data-count="{{ App\Models\Alert::where('user_id', Auth::user()->id)->first()->alert }}">{{ App\Models\Alert::where('user_id', Auth::user()->id)->first()->alert }}</span>
-                                </a>
-                                <!-- Dropdown - Alerts -->
-                                <div class="dropdown-list dropdown-menu dropdown-menu-right text-right mt-2" aria-labelledby="alertsDropdown">
-                                    <div class="alert-body">
-
-                                    </div>
-                                    <a class="dropdown-item text-center small text-gray-500" href="{{ route('all.Notification') }}">عرض جميع الإشعارات</a>
-                                </div>
-                            </li>
-                        @endauth
-                    </div> --}}
                     @guest
                         <li class="nav-item mt-2">
                             <a class="nav-link" href="{{ route('login') }}">{{ __('تسجيل الدخول') }}</a>
