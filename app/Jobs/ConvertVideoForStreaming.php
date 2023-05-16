@@ -2,6 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Models\Alert;
+use App\Models\ConvertedVideo;
+use App\Models\Notification;
 use App\Models\Video;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -10,9 +13,11 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use FFMpeg\Coordinate\Dimension;
+use FFMpeg\FFProbe;
 use FFMpeg\Filters\Video\VideoFilters;
 use FFMpeg\Format\Video\WebM;
 use FFMpeg\Format\Video\X264;
+use Illuminate\Support\Facades\Storage;
 use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg as SupportFFMpeg;
 
 class ConvertVideoForStreaming implements ShouldQueue
@@ -27,7 +32,7 @@ class ConvertVideoForStreaming implements ShouldQueue
 
     public function __construct(Video $video) // get the video model sent from the VideoController
     {
-        $this->video = $video;
+        $this->video = $video; // send from the VideoController
     }
 
     private function getFileName($filename, $type)
@@ -118,49 +123,102 @@ class ConvertVideoForStreaming implements ShouldQueue
      */
     public function handle(): void
     {
-        $low_BitrateFormat = (new X264('aac', 'libx264'))->setKiloBitrate(500); // 240p
-        $low2_BitrateFormat = (new X264('aac', 'libx264'))->setKiloBitrate(900); // 360p
-        $medium_BitrateFormat = (new X264('aac', 'libx264'))->setKiloBitrate(1500); // 480p
-        $high_BitrateFormat = (new X264('aac', 'libx264'))->setKiloBitrate(3000);   // 720p
+        $ffprobe = FFProbe::create(); // get the video info to get the width and height
+        $video1 = $ffprobe->streams(public_path('/storage//' . $this->video->video_path))->videos()->first();
+        $width = $video1->get('width');
+        $height = $video1->get('height');
 
-        $converted_name_240 = '240-' . $this->video->video_path;
-        $converted_name_360 = '360p-' . $this->video->video_path;
-        $converted_name_480 = '480p-' . $this->video->video_path;
-        $converted_name_720 = '720p-' . $this->video->video_path;
+        $media = SupportFFMpeg::fromDisk($this->video->disk)
+            ->open($this->video->video_path);
 
-        SupportFFMpeg::fromDisk($this->video->disk)
-            ->open($this->video->video_path)
+        $durationInSeconds = $media->getDurationInSeconds();
 
-            ->addFilter(function ($filters) { // 240p
-                $filters->resize(new Dimension(426, 240));
-            })
-            ->export()
-            ->toDisk('public')
-            ->inFormat($low_BitrateFormat)
-            ->save($converted_name_240)
+        $hours = floor($durationInSeconds / 3600);
+        $minutes = floor(($durationInSeconds / 60) % 60);
+        $seconds = $durationInSeconds % 60;
 
-            ->addFilter(function ($filters) { // 360p
-                $filters->resize(new Dimension(640, 360));
-            })
-            ->export()
-            ->toDisk('public')
-            ->inFormat($low2_BitrateFormat)
-            ->save($converted_name_360)
+        $quality = 0;
 
-            ->addFilter(function ($filters) { // 480p
-                $filters->resize(new Dimension(854, 480));
-            })
-            ->export()
-            ->toDisk('public')
-            ->inFormat($medium_BitrateFormat)
-            ->save($converted_name_480)
 
-            ->addFilter(function ($filters) { // 720p
-                $filters->resize(new Dimension(1280, 720));
-            })
-            ->export()
-            ->toDisk('public')
-            ->inFormat($high_BitrateFormat)
-            ->save($converted_name_720);
+
+        if ($width > $height) { // landscape
+
+            if (($width >= 1920) && ($height >= 1080)) {
+                $quality = 1080;
+                $this->convertVideo(0); // loop from 0 to 4 from 1080 to 240
+            } elseif (($width >= 1280) && ($height >= 720) && ($width < 1920 && $height < 1080)) {
+                $quality = 720;
+                $this->convertVideo(1); // loop from 1 to 4 from 720 to 240
+            } elseif (($width >= 854) && ($height >= 480) && ($width < 1280 && $height < 720)) {
+                $quality = 480;
+                $this->convertVideo(2); // loop from 2 to 4 from 480 to 240
+            } elseif (($width >= 640) && ($height >= 360) && ($width < 854 && $height < 480)) {
+                $quality = 360;
+                $this->convertVideo(3); // loop from 3 to 4 from 360 to 240
+            } else {
+                $quality = 240;
+                $this->convertVideo(4); // loop from 4 to 4 from 240 to 240
+            }
+        } else if ($height > $width) { // portrait
+
+            $this->video->update([
+                'Longitudinal' => true // if 1 = portrait if 0 = landscape
+            ]);
+
+            if (($height >= 1920) && ($width >= 1080)) {
+                $quality = 1080;
+                $this->convertVideo(0);
+            } elseif (($height >= 1280) && ($width >= 720) && ($height < 1920 && $width < 1080)) {
+                $quality = 720;
+                $this->convertVideo(1);
+            } elseif (($height >= 854) && ($width >= 480) && ($height < 1280 && $width < 720)) {
+                $quality = 480;
+                $this->convertVideo(2);
+            } elseif (($height >= 640) && ($width >= 360) && ($height < 854 && $width < 480)) {
+                $quality = 360;
+                $this->convertVideo(3);
+            } else {
+                $quality = 240;
+                $this->convertVideo(4);
+            }
+        }
+
+        Storage::disk('public')->delete($this->video->video_path); // delete the original video that the user uploaded
+
+        $converted_video = new ConvertedVideo;
+
+        for ($i = 0; $i < 5; $i++) { // write the video names in the database in columns mp4_Format_240 , webm_Format_240 etc..
+            $converted_video->{'mp4_Format_' . $this->hight[$i]} = $this->names[$i][0]; // index 0 is for mp4 in names array
+            $converted_video->{'webm_Format_' . $this->hight[$i]} = $this->names[$i][1]; // index 1 is for webm in names array
+        }
+
+        $converted_video->video_id = $this->video->id;
+
+        $converted_video->save();
+
+        // $notification = new Notification;
+
+        // $notification->user_id = $this->video->user_id;
+        // $notification->notification = $this->video->title;
+        // $notification->save();
+
+        // $data = [
+        //     'video_title' => $this->video->title,
+        // ];
+
+        // event(new RealNotification($data));
+
+        // $alert = Alert::where('user_id', $this->video->user_id)->first();
+
+        // $alert->alert++;
+        // $alert->save();
+
+        $this->video->update([
+            'processed' => true, // if processed is true then show the video in the website
+            'hours' => $hours,
+            'minutes' => $minutes,
+            'seconds' => $seconds,
+            'quality' => $quality,
+        ]);
     }
 }
