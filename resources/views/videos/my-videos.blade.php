@@ -18,7 +18,7 @@
                     <div class="col-sm-6 col-md-4 col-lg-3">
                         <div class="card">
                             <div class="card-icons">
-                                {{-- @php
+                                @php
                                     $hours_add_zero = sprintf('%02d', $video->hours);
                                 @endphp
                                 @php
@@ -26,10 +26,10 @@
                                 @endphp
                                 @php
                                     $seconds_add_zero = sprintf('%02d', $video->seconds);
-                                @endphp --}}
+                                @endphp
                                 <a href="/videos/{{ $video->id }}">
                                     <img src="{{ Storage::url($video->image_path) }}" class="card-img-top" alt="...">
-                                    {{-- <time>{{ $video->hours > 0 ? $hours_add_zero . ':' : '' }}{{ $minutes_add_zero }}:{{ $seconds_add_zero }}</time> --}}
+                                    <time>{{ $video->hours > 0 ? $hours_add_zero . ':' : '' }}{{ $minutes_add_zero }}:{{ $seconds_add_zero }}</time>
                                     <i class="fas fa-play fa-2x"></i>
                                 </a>
                             </div>
