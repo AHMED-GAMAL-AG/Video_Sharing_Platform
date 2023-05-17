@@ -85,17 +85,40 @@ class VideoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $video = Video::where('id', $id)->first();
+
+        return view('videos.edit-video', compact('video'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+        ]);
+
+        $video = Video::where('id', $id)->first();
+
+        if ($request->has('image')) { // the image is optional
+            $random_path = Str::random(16);
+            $new_path = $random_path . '.' . $request->image->getClientOriginalExtension();
+
+            Storage::delete($video->image_path); // delete the old image
+
+            $image = Image::make($request->image)->resize(320, 180);
+            $path = Storage::put($new_path, $image->stream());
+
+            $video->image_path = $new_path;
+        }
+
+        $video->title = $request->title;
+        $video->save();
+
+        return redirect('/videos')->with('success', __('تم تحديث معلومات المقطع بنجاح'));
     }
 
     /**
@@ -125,5 +148,21 @@ class VideoController extends Controller
         $video->delete();
 
         return back()->with('success', __('تم حذف المقطع بنجاح'));
+    }
+
+    /**
+     * Search for a video.
+     */
+
+    public function search(Request $request)
+    {
+        $this->validate($request, [
+            'term' => 'required',
+        ]);
+
+        $videos = Video::where('title', 'LIKE', '%' . $request->term . '%')->paginate(12); // get only 12 videos per page
+        $title = __('نتائج البحث عن:') . ' ' . $request->term;
+
+        return view('videos.my-videos', compact('videos', 'title'));
     }
 }

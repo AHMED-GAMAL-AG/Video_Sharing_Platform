@@ -2,14 +2,17 @@
 
 @section('content')
     <div class="mx-4">
-        {{-- <div class="row justify-content-center">
+        <div class="row justify-content-center">
             <form class="form-inline col-md-6 justify-content-center" action="{{ route('video.search') }}" method="GET">
-                <input type="text" class="form-control mx-sm-3 mb-2" name="term">
-                <button type="submit" class="btn btn-secondary mb-2">{{__('ابحث')}}</button>
+                <input type="text" class="form-control mx-sm-3 mb-2 form-control @error('term') invalid-feedback  is-invalid @enderror" name="term" placeholder="@error('term') {{ $message }} @enderror" >
+                <button type="submit" class="btn btn-secondary mb-2">
+                    {{ __('ابحث') }}
+                </button>
             </form>
         </div>
+
         <hr>
-        <br> --}}
+        <br>
 
         <p class="my-4">{{ $title }}</p>
         <div class="row">

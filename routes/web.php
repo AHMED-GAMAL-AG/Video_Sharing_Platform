@@ -29,3 +29,5 @@ Route::middleware([
 });
 
 Route::resource('/videos', VideoController::class);
+
+Route::get('/video/search', [VideoController::class, 'search'])->name('video.search');
