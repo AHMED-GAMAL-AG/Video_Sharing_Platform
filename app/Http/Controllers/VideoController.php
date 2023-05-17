@@ -12,12 +12,21 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class VideoController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except('show');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $videos = auth()->user()->videos->sortByDesc('created_at');
+        $title = __('آخر الفيديوهات المرفوعة');
+
+        return view('videos.my-videos', compact('videos', 'title'));
     }
 
     /**
