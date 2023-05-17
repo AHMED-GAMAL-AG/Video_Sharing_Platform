@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\ConvertVideoForStreaming;
+use App\Models\ConvertedVideo;
 use App\Models\Video;
 
 use Illuminate\Http\Request;
@@ -100,8 +101,29 @@ class VideoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $video = Video::where('id', $id)->first();
+        $converted_videos = ConvertedVideo::where('video_id', $id)->get();
+
+        foreach ($converted_videos as $converted_video) { // delete the videos from the s3 bucket
+            Storage::delete([
+                $converted_video->mp4_Format_240,
+                $converted_video->mp4_Format_360,
+                $converted_video->mp4_Format_480,
+                $converted_video->mp4_Format_720,
+                $converted_video->mp4_Format_1080,
+                $converted_video->webm_Format_240,
+                $converted_video->webm_Format_360,
+                $converted_video->webm_Format_480,
+                $converted_video->webm_Format_720,
+                $converted_video->webm_Format_1080,
+                $video->image_path,
+            ]);
+        }
+
+        $video->delete();
+
+        return back()->with('success', __('تم حذف المقطع بنجاح'));
     }
 }
