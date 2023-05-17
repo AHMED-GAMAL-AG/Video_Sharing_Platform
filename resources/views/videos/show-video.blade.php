@@ -46,3 +46,38 @@
     </div>
 @endSection
 
+@section('script')
+    <script>
+        document.getElementById("qualityPick").onchange = function() {
+            changeQuality()
+        };
+
+        function changeQuality() {
+            var video = document.getElementById("videoPlayer");
+            curTime = video.currentTime; // save the current time of the video so the video doesn't restart over again
+            var selected = document.getElementById("qualityPick").value;
+
+            if (selected == '1080') {
+                source = document.getElementById("webm_source").src = "{{ Storage::url($video_converted->webm_Format_1080) }}";
+                source = document.getElementById("mp4_source").src = "{{ Storage::url($video_converted->mp4_Format_1080) }}";
+            } else if (selected == '720') {
+                source = document.getElementById("webm_source").src = "{{ Storage::url($video_converted->webm_Format_720) }}";
+                source = document.getElementById("mp4_source").src = "{{ Storage::url($video_converted->mp4_Format_720) }}";
+            } else if (selected == '480') {
+                source = document.getElementById("webm_source").src = "{{ Storage::url($video_converted->webm_Format_480) }}";
+                source = document.getElementById("mp4_source").src = "{{ Storage::url($video_converted->mp4_Format_480) }}";
+            } else if (selected == '360') {
+                source = document.getElementById("webm_source").src = "{{ Storage::url($video_converted->webm_Format_360) }}";
+                source = document.getElementById("mp4_source").src = "{{ Storage::url($video_converted->mp4_Format_360) }}";
+            } else if (selected == '240') {
+                source = document.getElementById("webm_source").src = "{{ Storage::url($video_converted->webm_Format_240) }}";
+                source = document.getElementById("mp4_source").src = "{{ Storage::url($video_converted->mp4_Format_240) }}";
+            }
+
+            video.load();
+            video.play();
+            video.currentTime = curTime; // start playing the video from where the quality was changed
+
+        }
+    </script>
+@endSection
