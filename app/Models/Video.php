@@ -29,7 +29,7 @@ class Video extends Model
 
     public function convertedVideos() // can convert to many formats
     {
-        return $this->hasMany(ConvertedVideo::class);
+        return $this->hasMany(ConvertedVideo::class); // get the converted formats of this video
     }
 
     public function likes()
