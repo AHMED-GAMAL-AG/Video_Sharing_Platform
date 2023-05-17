@@ -9,13 +9,17 @@ class Video extends Model
 {
     use HasFactory;
 
-
     protected $fillable = [
         'disk',
         'video_path',
         'image_path',
         'title',
         'user_id',
+        'processed',
+        'hours',
+        'minutes',
+        'seconds',
+        'quality',
     ];
 
     public function user() // upload a video belongs to a user
@@ -45,6 +49,6 @@ class Video extends Model
 
     public function users() // user can watch many videos
     {
-        return $this->belongsToMany(Video::class , 'video_user' , 'video_id' , 'user_id')->withTimestamps()->withPivot('id'); // video_user pivot table user can watch many videos and video can be watched by many users
+        return $this->belongsToMany(Video::class, 'video_user', 'video_id', 'user_id')->withTimestamps()->withPivot('id'); // video_user pivot table user can watch many videos and video can be watched by many users
     }
 }
