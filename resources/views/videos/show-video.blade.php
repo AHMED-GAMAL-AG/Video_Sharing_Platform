@@ -41,6 +41,39 @@
                     </h5>
                 </div>
 
+                <div class="interaction text-center mt-5">
+                    <a href="#" class="like ml-3">
+                        @if ($user_like)
+                            @if ($user_like->like == 1)
+                                <i class="far fa-thumbs-up fa-2x liked"></i> <span id="likeNumber">{{ $likes_count }}</span>
+                            @else
+                                <i class="far fa-thumbs-up fa-2x"></i> <span id="likeNumber">{{ $likes_count }}</span>
+                            @endif
+                        @else
+                            <i class="far fa-thumbs-up fa-2x"></i> <span id="likeNumber">{{ $likes_count }}</span>
+                        @endif
+
+                    </a> |
+                    <a href="#" class="like mr-3">
+                        @if ($user_like)
+                            @if ($user_like->like == 0)
+                                <i id="like_down" class="far fa-thumbs-down fa-2x liked"></i> <span id="dislikeNumber">{{ $dislikes_count }}</span>
+                            @else
+                                <i id="like_down" class="far fa-thumbs-down fa-2x"></i> <span id="dislikeNumber">{{ $dislikes_count }}</span>
+                            @endif
+                        @else
+                            <i id="like_down" class="far fa-thumbs-down fa-2x"></i> <span id="dislikeNumber">{{ $dislikes_count }}</span>
+                        @endif
+                    </a>
+
+                    @foreach ($video->views as $view)
+                        <span class="float-right"> {{__('عدد المشاهدات')}}<span class="viewsNumber">{{ $view->views_number }}</span></span>
+                    @endforeach
+
+                    <div class="loginAlert mt-5">
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
