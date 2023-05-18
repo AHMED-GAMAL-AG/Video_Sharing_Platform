@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,5 +30,6 @@ Route::middleware([
 });
 
 Route::resource('/videos', VideoController::class);
-
 Route::get('/video/search', [VideoController::class, 'search'])->name('video.search');
+
+Route::post('/like' , [LikeController::class, 'likeVideo'])->name('like');

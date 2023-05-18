@@ -67,7 +67,7 @@
                     </a>
 
                     @foreach ($video->views as $view)
-                        <span class="float-right"> {{__('عدد المشاهدات')}}<span class="viewsNumber">{{ $view->views_number }}</span></span>
+                        <span class="float-right"> {{ __('عدد المشاهدات') }}<span class="viewsNumber">{{ $view->views_number }}</span></span>
                     @endforeach
 
                     <div class="loginAlert mt-5">
@@ -80,6 +80,7 @@
 @endSection
 
 @section('script')
+    {{-- for changing video quality --}}
     <script>
         document.getElementById("qualityPick").onchange = function() {
             changeQuality()
@@ -112,5 +113,67 @@
             video.currentTime = curTime; // start playing the video from where the quality was changed
 
         }
+    </script>
+
+    {{-- for liking and disliking --}}
+    <script>
+        $('.like').on('click', function(event) {
+            var token = '{{ Session::token() }}';
+            var urlLike = '{{ route('like') }}';
+
+            var videoId = 0;
+
+            var AuthUser = "{{ Auth::user() ? 0 : 1 }}";
+
+            if (AuthUser == '1') { // log in alert
+                event.preventDefault();
+                var html = '<div class="alert alert-danger">\
+                                                            <ul>\
+                                                                <li class="loginAlert">يجب تسجيل الدخول لكي تستطيع الإعجاب بالفيديو</li>\
+                                                            </ul>\
+                                                        </div>';
+                $(".loginAlert").html(html);
+            } else {
+                event.preventDefault(); // to prevent the page from going up when clicking on the like button
+                videoId = $("#videoId").val();
+                var isLike = event.target.parentNode.previousElementSibling == null;
+                $.ajax({
+                    method: 'POST',
+                    url: urlLike,
+                    data: {
+                        isLike: isLike,
+                        videoId: videoId,
+                        _token: token
+                    },
+                    success: function(data) {
+                        if ($(event.target).hasClass('fa-thumbs-up')) {
+                            if ($(event.target).hasClass('liked')) {
+                                $(event.target).removeClass("liked");
+                            } else {
+                                $(event.target).addClass("liked");
+                            }
+
+                            $('#likeNumber').html(data.countLike);
+                            $('#dislikeNumber').html(data.countDislike);
+                        }
+
+                        if ($(event.target).hasClass('fa-thumbs-down')) {
+                            if ($(event.target).hasClass('liked')) {
+                                $(event.target).removeClass("liked");
+                            } else {
+                                $(event.target).addClass("liked");
+                            }
+                            $('#likeNumber').html(data.countLike);
+                            $('#dislikeNumber').html(data.countDislike);
+                        }
+                        if (isLike) {
+                            $(".fa-thumbs-down").removeClass("liked");
+                        } else {
+                            $(".fa-thumbs-up").removeClass("liked");
+                        }
+                    }
+                })
+            }
+        });
     </script>
 @endSection
