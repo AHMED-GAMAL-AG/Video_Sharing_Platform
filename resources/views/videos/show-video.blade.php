@@ -67,7 +67,7 @@
                     </a>
 
                     @foreach ($video->views as $view)
-                        <span class="float-right"> {{ __('عدد المشاهدات') }}<span class="viewsNumber">{{ $view->views_number }}</span></span>
+                        <span class="float-right"> {{ __('عدد المشاهدات') }}<span class="viewsNumber mr-2">{{ $view->views_number }}</span></span>
                     @endforeach
 
                     <div class="loginAlert mt-5">
@@ -128,10 +128,10 @@
             if (AuthUser == '1') { // log in alert
                 event.preventDefault();
                 var html = '<div class="alert alert-danger">\
-                                                            <ul>\
-                                                                <li class="loginAlert">يجب تسجيل الدخول لكي تستطيع الإعجاب بالفيديو</li>\
-                                                            </ul>\
-                                                        </div>';
+                                                                <ul>\
+                                                                    <li class="loginAlert">يجب تسجيل الدخول لكي تستطيع الإعجاب بالفيديو</li>\
+                                                                </ul>\
+                                                            </div>';
                 $(".loginAlert").html(html);
             } else {
                 event.preventDefault(); // to prevent the page from going up when clicking on the like button
@@ -174,6 +174,28 @@
                     }
                 })
             }
+        });
+    </script>
+
+    {{-- when watching a full video change the view count --}}
+    <script>
+        $('#videoPlayer').on('ended', function(e) {
+            var token = '{{ Session::token() }}';
+            var urlComment = '{{ route('view') }}';
+            event.preventDefault();
+            videoId = $("#videoId").val();
+
+            $.ajax({
+                method: 'POST',
+                url: urlComment,
+                data: {
+                    videoId: videoId,
+                    _token: token
+                },
+                success: function(data) {
+                    $(".viewsNumber").html(data.viewsNumbers);
+                }
+            })
         });
     </script>
 @endSection

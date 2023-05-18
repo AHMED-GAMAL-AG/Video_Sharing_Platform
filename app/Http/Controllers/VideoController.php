@@ -6,7 +6,7 @@ use App\Jobs\ConvertVideoForStreaming;
 use App\Models\ConvertedVideo;
 use App\Models\Like;
 use App\Models\Video;
-
+use App\Models\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -18,7 +18,7 @@ class VideoController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('show');
+        $this->middleware('auth')->except(['show' , 'addView']);
     }
 
     /**
@@ -71,6 +71,12 @@ class VideoController extends Controller
             'user_id' => auth()->user()->id,
         ]);
 
+        $view = View::create([
+            'video_id' => $video->id,
+            'user_id' => auth()->id(),
+            'views_number' => 0, // when uploading the video, the views number is 0
+        ]);
+
         ConvertVideoForStreaming::dispatch($video); // send the video to the queue
 
         return redirect()->back()->with('success', __('سيكون مقطع الفيديو متوفر في أسرع وقت عندما ننتهي من معالجته'));
@@ -92,7 +98,7 @@ class VideoController extends Controller
             $user_like = 0;
         }
 
-        return view('videos.show-video', compact('video', 'likes_count' , 'dislikes_count', 'user_like'));
+        return view('videos.show-video', compact('video', 'likes_count', 'dislikes_count', 'user_like'));
     }
 
     /**
@@ -177,5 +183,15 @@ class VideoController extends Controller
         $title = __('نتائج البحث عن:') . ' ' . $request->term;
 
         return view('videos.my-videos', compact('videos', 'title'));
+    }
+
+    public function addView(Request $request) // for the views count
+    {
+        $views = View::where('video_id', $request->videoId)->first(); // the videoId is sent from the ajax request
+        $views->views_number++;
+        $views->save();
+
+        $viewsNumbers = $views->views_number; // return the views number to the ajax request
+        return response()->json(['viewsNumbers' => $viewsNumbers]);
     }
 }

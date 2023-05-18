@@ -31,5 +31,8 @@ Route::middleware([
 
 Route::resource('/videos', VideoController::class);
 Route::get('/video/search', [VideoController::class, 'search'])->name('video.search');
+Route::post('/view', [VideoController::class, 'addView'])->name('view'); // for the ajax request
 
-Route::post('/like' , [LikeController::class, 'likeVideo'])->name('like');
+
+Route::post('/like' , [LikeController::class, 'likeVideo'])->name('like'); // for the ajax request
+

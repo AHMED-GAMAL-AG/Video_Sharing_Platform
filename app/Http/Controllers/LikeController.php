@@ -17,7 +17,7 @@ class LikeController extends Controller
 
     public function LikeVideo(Request $request)
     {
-        $videoId = $request->videoId;
+        $videoId = $request->videoId; // the videoId from the ajax request
         $isLike = $request->isLike === 'true';
         $update = false;
 
