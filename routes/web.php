@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,7 @@ Route::resource('/videos', VideoController::class);
 Route::get('/video/search', [VideoController::class, 'search'])->name('video.search');
 Route::post('/view', [VideoController::class, 'addView'])->name('view'); // for the ajax request
 
-
 Route::post('/like' , [LikeController::class, 'likeVideo'])->name('like'); // for the ajax request
+
+Route::post('/comment', [CommentController::class, 'saveComment'])->name('comment'); // for the ajax request
 

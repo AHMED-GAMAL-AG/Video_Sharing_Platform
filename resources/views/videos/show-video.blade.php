@@ -74,6 +74,59 @@
 
                     </div>
                 </div>
+
+                {{-- Comments --}}
+                <div class="mt-4 px-2">
+                    <div class="comments">
+                        <div class="mb-3">
+                            <span>{{ __('التعليقات') }}</span>
+                        </div>
+                        <div>
+                            <textarea class="form-control" id="comment" name="comment" rows="4" placeholder="إضافة تعليق عام"></textarea>
+                            <button type="submit" class="btn btn-info mt-3 saveComment">{{ __('تعليق') }}</button>
+
+                            <div class="commentAlert mt-5">
+
+                            </div>
+
+                            {{-- <div class="commentBody">
+                                @foreach ($comments as $comment)
+                                    <div class="card mt-5 mb-3">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-2">
+                                                    <img src="{{ $comment->user->profile_photo_url }}" width="150px" class="rounded-full" />
+                                                </div>
+                                                <div class="col-10">
+                                                    @if (Auth::check())
+                                                        @if ($comment->user_id == auth()->user()->id || auth()->user()->administration_level > 0)
+                                                            @if (!auth()->user()->block)
+                                                                <form method="GET" action="{{ route('comment.destroy', $comment->id) }}" onsubmit="return confirm('هل أنت متأكد أنك تريد حذف التعليق هذا؟')">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="float-left"><i class="far fa-trash-alt text-danger fa-lg"></i></button>
+                                                                </form>
+
+                                                                <form method="GET" action="{{ route('comment.edit', $comment->id) }}">
+                                                                    @csrf
+                                                                    @method('PATCH')
+                                                                    <button type="submit" class="float-left"><i class="far fa-edit text-success fa-lg ml-3"></i></button>
+                                                                </form>
+                                                            @endif
+                                                        @endif
+                                                    @endif
+                                                    <p class="mt-3 mb-2"><strong>{{ $comment->user->name }}</strong></p>
+                                                    <i class="far fa-clock"></i> <span class="comment_date text-secondary">{{ $comment->created_at->diffForHumans() }}</span>
+                                                    <p class="mt-3">{{ $comment->body }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div> --}}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -128,10 +181,10 @@
             if (AuthUser == '1') { // log in alert
                 event.preventDefault();
                 var html = '<div class="alert alert-danger">\
-                                                                <ul>\
-                                                                    <li class="loginAlert">يجب تسجيل الدخول لكي تستطيع الإعجاب بالفيديو</li>\
-                                                                </ul>\
-                                                            </div>';
+                                                                                            <ul>\
+                                                                                                <li class="loginAlert">يجب تسجيل الدخول لكي تستطيع الإعجاب بالفيديو</li>\
+                                                                                            </ul>\
+                                                                                        </div>';
                 $(".loginAlert").html(html);
             } else {
                 event.preventDefault(); // to prevent the page from going up when clicking on the like button
@@ -196,6 +249,51 @@
                     $(".viewsNumber").html(data.viewsNumbers);
                 }
             })
+        });
+    </script>
+
+    {{-- for adding comments --}}
+    <script>
+        $('.saveComment').on('click', function(event) {
+            var token = '{{ Session::token() }}';
+            var urlComment = '{{ route('comment') }}';
+
+            var videoId = 0;
+
+            var AuthUser = "{{ Auth::user() ? 0 : 1 }}";
+            // var blocked = "{{ Auth::user() ? (Auth::user()->block ? 1 : 0) : 2 }}";
+
+            if (AuthUser == '1') { // if user is authenticated
+                event.preventDefault();
+                var html = '<div class="alert alert-danger">\
+                                <ul>\
+                                    <li>يجب تسجيل الدخول لكي تستطيع التعليق على الفيديو</li>\
+                                </ul>\
+                            </div>';
+                $(".commentAlert ").html(html);
+            } else if ($('#comment').val().length == 0) { // if the comment is  empty
+                var html = '<div class="alert alert-danger">\
+                                <ul>\
+                                    <li>الرجاء كتابة تعليق</li>\
+                                </ul>\
+                            </div>';
+                $(".commentAlert ").html(html);
+            } else { // if the user is authenticated and the comment is not empty
+                $(".commentAlert ").html(''); // delete the alerts if found
+                event.preventDefault();
+                videoId = $("#videoId").val();
+                comment = $("#comment").val();
+
+                $.ajax({
+                    method: 'POST',
+                    url: urlComment,
+                    data: {
+                        comment: comment,
+                        videoId: videoId,
+                        _token: token
+                    },
+                })
+            }
         });
     </script>
 @endSection

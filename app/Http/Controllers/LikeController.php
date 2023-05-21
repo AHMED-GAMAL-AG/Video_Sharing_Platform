@@ -40,7 +40,7 @@ class LikeController extends Controller
             $like = new Like();
         }
 
-        $like->like = $isLike;
+        $like->liked = $isLike;
         $like->user_id = $user->id;
         $like->video_id = $video->id;
         if ($update) {
@@ -49,8 +49,8 @@ class LikeController extends Controller
             $like->save();
         }
 
-        $countLike = Like::where('video_id', $video->id)->where('like', '1')->count();
-        $countDislike = Like::where('video_id', $video->id)->where('like', '0')->count();
+        $countLike = Like::where('video_id', $video->id)->where('liked', '1')->count();
+        $countDislike = Like::where('video_id', $video->id)->where('liked', '0')->count();
 
         return response()->json([
             'countLike' => $countLike,
