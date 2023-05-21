@@ -18,7 +18,7 @@ class VideoController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except(['show' , 'addView']);
+        $this->middleware('auth')->except(['show', 'addView']);
     }
 
     /**
@@ -98,7 +98,9 @@ class VideoController extends Controller
             $user_like = 0;
         }
 
-        return view('videos.show-video', compact('video', 'likes_count', 'dislikes_count', 'user_like'));
+        $comments = $video->comments->sortByDesc('created_at');
+
+        return view('videos.show-video', compact('video', 'likes_count', 'dislikes_count', 'user_like', 'comments'));
     }
 
     /**

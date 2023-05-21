@@ -26,5 +26,17 @@ class CommentController extends Controller
         $comment->body = $userComment;
 
         $comment->save();
+
+        $userName = Auth::user()->name;
+        $userImage = Auth::user()->profile_photo_url;
+        $commentDate = $comment->created_at->diffForHumans();
+        $commentId = $comment->id;
+
+        return response()->json([
+            'userName' => $userName,
+            'userImage' => $userImage,
+            'commentDate' => $commentDate,
+            'commentId' => $commentId,
+        ]);
     }
 }

@@ -89,7 +89,7 @@
 
                             </div>
 
-                            {{-- <div class="commentBody">
+                            <div class="commentBody">
                                 @foreach ($comments as $comment)
                                     <div class="card mt-5 mb-3">
                                         <div class="card-body">
@@ -98,7 +98,7 @@
                                                     <img src="{{ $comment->user->profile_photo_url }}" width="150px" class="rounded-full" />
                                                 </div>
                                                 <div class="col-10">
-                                                    @if (Auth::check())
+                                                    {{-- @if (Auth::check())
                                                         @if ($comment->user_id == auth()->user()->id || auth()->user()->administration_level > 0)
                                                             @if (!auth()->user()->block)
                                                                 <form method="GET" action="{{ route('comment.destroy', $comment->id) }}" onsubmit="return confirm('هل أنت متأكد أنك تريد حذف التعليق هذا؟')">
@@ -114,7 +114,7 @@
                                                                 </form>
                                                             @endif
                                                         @endif
-                                                    @endif
+                                                    @endif --}}
                                                     <p class="mt-3 mb-2"><strong>{{ $comment->user->name }}</strong></p>
                                                     <i class="far fa-clock"></i> <span class="comment_date text-secondary">{{ $comment->created_at->diffForHumans() }}</span>
                                                     <p class="mt-3">{{ $comment->body }}</p>
@@ -123,7 +123,7 @@
                                         </div>
                                     </div>
                                 @endforeach
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -181,10 +181,10 @@
             if (AuthUser == '1') { // log in alert
                 event.preventDefault();
                 var html = '<div class="alert alert-danger">\
-                                                                                            <ul>\
-                                                                                                <li class="loginAlert">يجب تسجيل الدخول لكي تستطيع الإعجاب بالفيديو</li>\
-                                                                                            </ul>\
-                                                                                        </div>';
+                                                                                                        <ul>\
+                                                                                                            <li class="loginAlert">يجب تسجيل الدخول لكي تستطيع الإعجاب بالفيديو</li>\
+                                                                                                        </ul>\
+                                                                                                    </div>';
                 $(".loginAlert").html(html);
             } else {
                 event.preventDefault(); // to prevent the page from going up when clicking on the like button
@@ -266,17 +266,17 @@
             if (AuthUser == '1') { // if user is authenticated
                 event.preventDefault();
                 var html = '<div class="alert alert-danger">\
-                                <ul>\
-                                    <li>يجب تسجيل الدخول لكي تستطيع التعليق على الفيديو</li>\
-                                </ul>\
-                            </div>';
+                                            <ul>\
+                                                <li>يجب تسجيل الدخول لكي تستطيع التعليق على الفيديو</li>\
+                                            </ul>\
+                                        </div>';
                 $(".commentAlert ").html(html);
             } else if ($('#comment').val().length == 0) { // if the comment is  empty
                 var html = '<div class="alert alert-danger">\
-                                <ul>\
-                                    <li>الرجاء كتابة تعليق</li>\
-                                </ul>\
-                            </div>';
+                                            <ul>\
+                                                <li>الرجاء كتابة تعليق</li>\
+                                            </ul>\
+                                        </div>';
                 $(".commentAlert ").html(html);
             } else { // if the user is authenticated and the comment is not empty
                 $(".commentAlert ").html(''); // delete the alerts if found
@@ -292,6 +292,26 @@
                         videoId: videoId,
                         _token: token
                     },
+
+
+                    success: function(data) {
+                        $("#comment").val(''); // empty the comment input
+                        var html = '  <div class="card mt-5 mb-3">\
+                                            <div class="card-body">\
+                                                <div class="row">\
+                                                    <div class="col-2">\
+                                                        <img src="' + data.userImage + '" width="150px" class="rounded-full"/>\
+                                                    </div>\
+                                                    <div class="col-10">\
+                                                        <p class="mt-3 mb-2"><strong>' + data.userName + '</strong></p>\
+                                                        <i class="far fa-clock"></i> <span class="comment_date text-secondary">' + data.commentDate + '</span>\
+                                                        <p class="mt-3" >' + comment + '</p>\
+                                                    </div>\
+                                                </div>\
+                                            </div>\
+                                        </div>';
+                        $(".commentBody").prepend(html);
+                    }
                 })
             }
         });
