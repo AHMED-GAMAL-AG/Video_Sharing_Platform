@@ -21,7 +21,7 @@
 
     {{-- <link href="{!! asset('theme/css/sb-admin-2.css') !!}" rel="stylesheet"> --}}
 
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/style.css'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>
 

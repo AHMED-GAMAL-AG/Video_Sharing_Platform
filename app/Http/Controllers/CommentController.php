@@ -39,4 +39,27 @@ class CommentController extends Controller
             'commentId' => $commentId,
         ]);
     }
+
+    public function destroy($id)
+    {
+        $comment = Comment::findOrFail($id);
+        $comment->delete();
+
+        return back()->with('success', __('تم حذف التعليق بنجاح'));
+    }
+
+    public function edit($id)
+    {
+        $comment = Comment::findOrFail($id);
+        return view('comment.edit', compact('comment'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $comment = Comment::findOrFail($id);
+        $comment->body = $request->comment;
+        $comment->save();
+
+        return redirect()->route('videos.show', $comment->video_id)->with('success', __('تم تعديل التعليق بنجاح'));
+    }
 }

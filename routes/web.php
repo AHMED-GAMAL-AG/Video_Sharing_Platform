@@ -37,4 +37,7 @@ Route::post('/view', [VideoController::class, 'addView'])->name('view'); // for 
 Route::post('/like' , [LikeController::class, 'likeVideo'])->name('like'); // for the ajax request
 
 Route::post('/comment', [CommentController::class, 'saveComment'])->name('comment'); // for the ajax request
+Route::get('/comment/{id}/edit', [CommentController::class, 'edit'])->name('comment.edit');
+Route::patch('/comment/{id}', [CommentController::class, 'update'])->name('comment.update');
+Route::get('/comment/{id}', [CommentController::class, 'destroy'])->name('comment.destroy');
 
