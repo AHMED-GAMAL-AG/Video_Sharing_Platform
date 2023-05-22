@@ -3,6 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Comment;
+use App\Models\Video;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,5 +24,16 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         // $this->call(UserSeeder::class);
+
+        $this->call([
+            ChannelSeeder::class,
+            VideoSeeder::class,
+            ConvertedVideoSeeder::class,
+            CommentSeeder::class,
+            NotificationSeeder::class,
+            AlertSeeder::class,
+            LikeSeeder::class,
+            ViewSeeder::class,
+        ]);
     }
 }
