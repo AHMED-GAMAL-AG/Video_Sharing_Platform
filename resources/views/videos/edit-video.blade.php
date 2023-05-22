@@ -5,7 +5,7 @@
         <div class="row justify-content-center mt-3">
             <div class="card mb-2 col-md-8">
                 <div class="card-header text-center">
-                    {{ __('عدّل بيانات الفيديو') }}
+                    {{ __('عدّل بيانات المقطع') }}
                 </div>
                 <div class="card-body">
                     <form action="{{ route('videos.update', $video->id) }}" method="POST" enctype="multipart/form-data">
@@ -13,7 +13,7 @@
                         @method('patch')
 
                         <div class="form-group">
-                            <label for="title">{{ __('عنوان الفيديو') }}</label>
+                            <label for="title">{{ __('عنوان المقطع') }}</label>
                             <input type="text" id="title" name="title" value="{{ $video->title }}" class="form-control @error('title') is-invalid @enderror">
                             @error('title')
                                 <span class="invalid-feedback">

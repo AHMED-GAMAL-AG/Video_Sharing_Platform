@@ -180,7 +180,7 @@
                 event.preventDefault();
                 var html = '<div class="alert alert-danger">\
                                                                                                                             <ul>\
-                                                                                                                                <li class="loginAlert">يجب تسجيل الدخول لكي تستطيع الإعجاب بالفيديو</li>\
+                                                                                                                                <li class="loginAlert">يجب تسجيل الدخول لكي تستطيع الإعجاب بالمقطع</li>\
                                                                                                                             </ul>\
                                                                                                                         </div>';
                 $(".loginAlert").html(html);
@@ -264,7 +264,7 @@
                 event.preventDefault();
                 var html = '<div class="alert alert-danger">\
                                                                 <ul>\
-                                                                    <li>يجب تسجيل الدخول لكي تستطيع التعليق على الفيديو</li>\
+                                                                    <li>يجب تسجيل الدخول لكي تستطيع التعليق على المقطع</li>\
                                                                 </ul>\
                                                             </div>';
                 $(".commentAlert ").html(html);

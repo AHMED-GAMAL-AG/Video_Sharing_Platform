@@ -18,7 +18,7 @@
                             @csrf
 
                             <div class="form-group">
-                                <label for="title">{{ __('عنوان الفيديو') }}</label>
+                                <label for="title">{{ __('عنوان المقطع') }}</label>
                                 <input type="text" id="title" name="title" value="{{ old('title') }}" class="form-control @error('title') is-invalid @enderror">
                                 @error('title')
                                     <span class="invalid-feedback">
@@ -44,9 +44,9 @@
                             </div>
 
                             <div class="form-group file-area">
-                                <label for="video">{{ __('مقطع الفيديو') }}</label>
+                                <label for="video">{{ __('مقطع المقطع') }}</label>
                                 <input type="file" id="video" accept="video/*" onchange="readVideo(this);" name="video" class="form-control @error('video') is-invalid @enderror">
-                                <div class="input-title">{{ __('اسحب مقطع الفيديو إلى هنا أو انقر للاختيار يدويًا') }}</div>
+                                <div class="input-title">{{ __('اسحب مقطع المقطع إلى هنا أو انقر للاختيار يدويًا') }}</div>
 
                                 @error('video')
                                     <span class="invalid-feedback">
@@ -60,7 +60,7 @@
 
                             <div class="form-group row">
                                 <div class="col-md-4">
-                                    <button type="submit" class="btn btn-secondary">{{ __('رفع الفيديو') }}</button>
+                                    <button type="submit" class="btn btn-secondary">{{ __('رفع المقطع') }}</button>
                                 </div>
                             </div>
 
@@ -93,7 +93,7 @@
                 reader.readAsDataURL(input.files[0]);
                 $(".video-name").html('\
                         <div class="alert alert-primary">\
-                            تم اختيار مقطع الفيديو بنجاح ' + input.files[0].name + '\
+                            تم اختيار مقطع المقطع بنجاح ' + input.files[0].name + '\
                         </div>');
             }
         }

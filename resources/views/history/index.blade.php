@@ -4,10 +4,10 @@
     <div class="mx-4">
         @if ($videos_in_history->count() > 0)
             <div class="row justify-content-center">
-                <form class="form-inline col-md-6 justify-content-center" method="POST" action="" onsubmit="return confirm('{{ __('هل أنت متأكد أنك تريد حذف السجل بشكلٍ كامل؟') }}')">
+                <form class="form-inline col-md-6 justify-content-center" method="POST" action="{{route('history.clear')}}" onsubmit="return confirm('{{ __('هل أنت متأكد أنك تريد حذف السجل بشكلٍ كامل؟') }}')">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mb-2">{{ __('تفريغ السجل') }}</button>
+                    <button type="submit" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mb-4">{{ __('تفريغ السجل') }}</button>
                 </form>
             </div>
             <hr>
@@ -51,7 +51,7 @@
 
                                     @auth
                                         @if ($video->user_id == auth()->user()->id || auth()->user()->administration_level > 0)
-                                            <form method="POST" action="" onsubmit="return confirm({{ __('هل أنت متأكد أنك تريد حذف مقطع الفيديو هذا؟') }})">
+                                            <form method="POST" action="{{route('history.destroy' , $video->pivot->id)}}" onsubmit="return confirm('{{ __('هل أنت متأكد أنك تريد حذف مقطع المقطع هذا؟') }}')">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="float-left"><i class="far fa-trash-alt text-danger fa-lg"></i></button>

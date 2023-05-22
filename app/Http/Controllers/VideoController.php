@@ -27,7 +27,7 @@ class VideoController extends Controller
     public function index()
     {
         $videos = auth()->user()->videos->sortByDesc('created_at');
-        $title = __('آخر الفيديوهات المرفوعة');
+        $title = __('آخر المقاطع المرفوعة');
 
         return view('videos.my-videos', compact('videos', 'title'));
     }
@@ -79,7 +79,7 @@ class VideoController extends Controller
 
         ConvertVideoForStreaming::dispatch($video); // send the video to the queue
 
-        return redirect()->back()->with('success', __('سيكون مقطع الفيديو متوفر في أسرع وقت عندما ننتهي من معالجته'));
+        return redirect()->back()->with('success', __('سيكون مقطع المقطع متوفر في أسرع وقت عندما ننتهي من معالجته'));
     }
 
     /**

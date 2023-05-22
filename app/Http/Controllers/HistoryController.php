@@ -15,10 +15,24 @@ class HistoryController extends Controller
 
     public function index()
     {
-        $user = User::find(auth()->id());
-        $videos_in_history = $user->history()->get();
+        $videos_in_history = auth()->user()->history->sortByDesc('pivot.created_at');
         $title = __('سجل المشاهدة');
 
         return view('history.index', compact('videos_in_history', 'title'));
+    }
+
+    public function destroy($id)
+    {
+
+        auth()->user()->history()->wherePivot('id', $id)->detach();
+
+        return back()->with('success', __('تم حذف المقطع من سجل المشاهدة'));
+    }
+
+    public function clear()
+    {
+        auth()->user()->history()->detach();
+
+        return back()->with('success', __('تم حذف جميع المقاطع من سجل المشاهدة'));
     }
 }

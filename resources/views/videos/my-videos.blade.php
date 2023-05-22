@@ -52,7 +52,7 @@
                                     @auth
                                         @if ($video->user_id == auth()->user()->id || auth()->user()->administration_level > 0)
                                             @if (!auth()->user()->block)
-                                                <form method="POST" action="{{ route('videos.destroy', $video->id) }}" onsubmit="return confirm('{{ 'هل أنت متأكد أنك تريد حذف مقطع الفيديو هذا؟' }}')">
+                                                <form method="POST" action="{{ route('videos.destroy', $video->id) }}" onsubmit="return confirm('{{ 'هل أنت متأكد أنك تريد حذف مقطع المقطع هذا؟' }}')">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="float-left"><i class="far fa-trash-alt text-danger fa-lg"></i></button>
