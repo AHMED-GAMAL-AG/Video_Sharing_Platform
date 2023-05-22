@@ -63,7 +63,7 @@
                     @endauth
 
                     <li class="nav-item {{ request()->is('channel*') ? 'active' : '' }}">
-                        <a class="nav-link" href="">
+                        <a class="nav-link" href="{{route('channel.index')}}">
                             <i class="fas fa-film"></i>
                             {{ __('القنوات') }}
                         </a>

@@ -38,7 +38,7 @@
                                     <i class="fas fa-clock"></i> <span>{{ $video->created_at->diffForHumans() }}</span>
                                 </small>
                             </div>
-                            <a href="{{ route('main.channels.videos', $video->user) }}" class="channel-img">
+                            <a href="{{ route('channel.videos', $video->user) }}" class="channel-img">
                                 <img src="{{ $video->user->profile_photo_url }}" class="rounded-full my-1 mr-3 d-inline" width="30">
                                 <span class="card-text">{{ $video->user->name }}</span>
                             </a>
