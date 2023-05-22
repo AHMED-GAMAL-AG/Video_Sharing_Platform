@@ -36,7 +36,7 @@ Route::middleware([
 });
 
 Route::get('/', [MainController::class, 'index'])->name('home');
-Route::get('/main/{channel}/videos' , [MainController::class, 'channelVideos'])->name('channel.videos');
+Route::get('/main/{channel}/videos', [MainController::class, 'channelVideos'])->name('channel.videos');
 
 Route::resource('/videos', VideoController::class);
 Route::get('/video/search', [VideoController::class, 'search'])->name('video.search');
@@ -49,9 +49,13 @@ Route::get('/comment/{id}/edit', [CommentController::class, 'edit'])->name('comm
 Route::patch('/comment/{id}', [CommentController::class, 'update'])->name('comment.update');
 Route::get('/comment/{id}', [CommentController::class, 'destroy'])->name('comment.destroy');
 
-Route::get('/history', [HistoryController::class , 'index'])->name('history');
-Route::delete('/history/{id}', [HistoryController::class , 'destroy'])->name('history.destroy');
-Route::delete('/history', [HistoryController::class , 'clear'])->name('history.clear');
+Route::get('/history', [HistoryController::class, 'index'])->name('history');
+Route::delete('/history/{id}', [HistoryController::class, 'destroy'])->name('history.destroy');
+Route::delete('/history', [HistoryController::class, 'clear'])->name('history.clear');
 
-Route::get('/channels' , [ChannelController::class, 'index'])->name('channel.index');
-Route::get('/channels/search' , [ChannelController::class, 'search'])->name('channels.search');
+Route::get('/channels', [ChannelController::class, 'index'])->name('channel.index');
+Route::get('/channels/search', [ChannelController::class, 'search'])->name('channels.search');
+
+Route::get('/admin', function () {
+    return view('theme.default');
+});
