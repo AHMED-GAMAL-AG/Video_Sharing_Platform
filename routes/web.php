@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\{
+    AdminController,
     ChannelController,
     CommentController,
     HistoryController,
@@ -56,6 +57,6 @@ Route::delete('/history', [HistoryController::class, 'clear'])->name('history.cl
 Route::get('/channels', [ChannelController::class, 'index'])->name('channel.index');
 Route::get('/channels/search', [ChannelController::class, 'search'])->name('channels.search');
 
-Route::get('/admin', function () {
-    return view('theme.default');
-});
+Route::get('/admin' , [AdminController::class , 'index'])->name('admin.index');
+
+
