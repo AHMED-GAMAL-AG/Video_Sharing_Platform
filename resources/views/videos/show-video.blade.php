@@ -28,14 +28,14 @@
                         </video>
                     @endforeach
                 </div>
-                <select id='qualityPick'>
+                <select id='qualityPick' class="mt-1">
                     <option value="1080" {{ $video->quality == 1080 ? 'selected' : '' }} {{ $video->quality < 1080 ? 'hidden' : '' }}>1080p</option>
                     <option value="720" {{ $video->quality == 720 ? 'selected' : '' }} {{ $video->quality < 720 ? 'hidden' : '' }}>720p</option>
                     <option value="480" {{ $video->quality == 480 ? 'selected' : '' }} {{ $video->quality < 480 ? 'hidden' : '' }}>480p</option>
                     <option value="360" {{ $video->quality == 360 ? 'selected' : '' }} {{ $video->quality < 360 ? 'hidden' : '' }}>360p</option>
                     <option value="240" {{ $video->quality == 240 ? 'selected' : '' }}>240p</option>
                 </select>
-                <div class="title mt-3">
+                <div class="title mt-3 mr-2">
                     <h5>
                         {{ $video->title }}
                     </h5>
@@ -83,7 +83,7 @@
                         </div>
                         <div>
                             <textarea class="form-control" id="comment" name="comment" rows="4" placeholder="إضافة تعليق عام"></textarea>
-                            <button type="submit" class="btn btn-info mt-3 saveComment">{{ __('تعليق') }}</button>
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-3 saveComment">{{ __('تعليق') }}</button>
 
                             <div class="commentAlert mt-5">
 

@@ -2,23 +2,23 @@
 
 @section('content')
     <div class="mx-4">
-        <div class="row justify-content-center">
-            <form class="form-inline col-md-6 justify-content-center" action="{{ route('video.search') }}" method="GET">
-                <input type="text" class="form-control mx-sm-3 mb-2 form-control @error('term') invalid-feedback  is-invalid @enderror" name="term" placeholder="@error('term') {{ $message }} @enderror" >
-                <button type="submit" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mb-2">
-                    {{ __('ابحث') }}
-                </button>
-            </form>
-        </div>
-
-        <hr>
+        @if ($videos_in_history->count() > 0)
+            <div class="row justify-content-center">
+                <form class="form-inline col-md-6 justify-content-center" method="POST" action="" onsubmit="return confirm('{{ __('هل أنت متأكد أنك تريد حذف السجل بشكلٍ كامل؟') }}')">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mb-2">{{ __('تفريغ السجل') }}</button>
+                </form>
+            </div>
+            <hr>
+        @endif
         <br>
 
         <p class="my-4">{{ $title }}</p>
         <div class="row">
-            @forelse($videos as $video)
+            @forelse($videos_in_history as $video)
                 @if ($video->processed)
-                    <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="col-sm-6 col-md-4 col-lg-3 mt-3">
                         <div class="card">
                             <div class="card-icons">
                                 @php
@@ -47,23 +47,15 @@
                                         <span class="d-block"><i class="fas fa-eye"></i> {{ $view->views_number }} {{ __('مشاهدة') }}</span>
                                     @endforeach
 
-                                    <i class="fas fa-clock"></i> <span>{{ $video->created_at->diffForHumans() }}</span>
+                                    <i class="fas fa-clock"></i> <span>{{ $video->pivot->created_at->diffForHumans() }}</span>
 
                                     @auth
                                         @if ($video->user_id == auth()->user()->id || auth()->user()->administration_level > 0)
-                                            @if (!auth()->user()->block)
-                                                <form method="POST" action="{{ route('videos.destroy', $video->id) }}" onsubmit="return confirm('{{ 'هل أنت متأكد أنك تريد حذف مقطع الفيديو هذا؟' }}')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="float-left"><i class="far fa-trash-alt text-danger fa-lg"></i></button>
-                                                </form>
-
-                                                <form method="GET" action="{{ route('videos.edit', $video->id) }}">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <button type="submit" class="float-left"><i class="far fa-edit text-success fa-lg ml-3"></i></button>
-                                                </form>
-                                            @endif
+                                            <form method="POST" action="" onsubmit="return confirm({{ __('هل أنت متأكد أنك تريد حذف مقطع الفيديو هذا؟') }})">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="float-left"><i class="far fa-trash-alt text-danger fa-lg"></i></button>
+                                            </form>
                                         @endif
                                     @endauth
                                 </small>

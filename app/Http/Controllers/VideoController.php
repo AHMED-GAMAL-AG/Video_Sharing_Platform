@@ -98,6 +98,10 @@ class VideoController extends Controller
             $user_like = 0;
         }
 
+        if(Auth::check()){ // add the video to history when the user click on it
+            auth()->user()->history()->attach($video->id); // video_user table
+        }
+
         $comments = $video->comments->sortByDesc('created_at');
 
         return view('videos.show-video', compact('video', 'likes_count', 'dislikes_count', 'user_like', 'comments'));

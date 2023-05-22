@@ -19,10 +19,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
-    {{-- <link href="{!! asset('theme/css/sb-admin-2.css') !!}" rel="stylesheet"> --}}
-
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
 </head>
 
 <body dir="rtl" style="text-align: right">
@@ -44,7 +41,7 @@
 
                     @auth
                         <li class="nav-item {{ request()->is('history') ? 'active' : '' }}">
-                            <a class="nav-link" href="">
+                            <a class="nav-link" href="{{route('history')}}">
                                 <i class="fas fa-history"></i>
                                 {{ __('سجل المشاهدة') }}
                             </a>
@@ -96,7 +93,7 @@
                                     <div class="flex items-center px-4">
                                         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                                             <div class="flex-shrink-0 ml-3">
-                                                <img class="h-10 w-10 rounded-full object-cover"  src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                                                <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
                                             </div>
                                         @endif
 
