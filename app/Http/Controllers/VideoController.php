@@ -27,7 +27,7 @@ class VideoController extends Controller
     public function index()
     {
         $videos = auth()->user()->videos->sortByDesc('created_at');
-        $title = __('آخر المقاطع المرفوعة');
+        $title = __('آخر المقاطع المرفوعة :');
 
         return view('videos.my-videos', compact('videos', 'title'));
     }

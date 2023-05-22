@@ -4,10 +4,8 @@
     <div class="mx-4">
         <div class="row justify-content-center">
             <form class="form-inline col-md-6 justify-content-center" action="{{ route('video.search') }}" method="GET">
-                <input type="text" class="form-control mx-sm-3 mb-2 form-control @error('term') invalid-feedback  is-invalid @enderror" name="term" placeholder="@error('term') {{ $message }} @enderror" >
-                <button type="submit" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mb-2">
-                    {{ __('ابحث') }}
-                </button>
+                <input type="text" class="form-control mx-sm-3 mb-3 form-control @error('term') invalid-feedback  is-invalid @enderror" name="term" placeholder="@error('term') {{ $message }} @enderror" >
+                <button type="" class="btn btn-secondary mb-3">{{__('ابحث')}}</button>
             </form>
         </div>
 

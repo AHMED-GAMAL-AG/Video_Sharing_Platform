@@ -54,3 +54,4 @@ Route::delete('/history/{id}', [HistoryController::class , 'destroy'])->name('hi
 Route::delete('/history', [HistoryController::class , 'clear'])->name('history.clear');
 
 Route::get('/channels' , [ChannelController::class, 'index'])->name('channel.index');
+Route::get('/channels/search' , [ChannelController::class, 'search'])->name('channels.search');

@@ -13,7 +13,7 @@ class MainController extends Controller
     public function index()
     {
         $date = Carbon::now()->subDays(7);
-        $title = __('المقاطع الأكثر مشاهدة خلال الأسبوع');
+        $title = __('المقاطع الأكثر مشاهدة خلال الأسبوع :');
         $videos = Video::join('views' , 'videos.id' , '=' , 'views.video_id')
             ->orderBy('views.views_number' , 'desc')
             ->where('views.created_at' , '>=' , $date)

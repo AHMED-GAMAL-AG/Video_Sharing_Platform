@@ -3,12 +3,12 @@
 @section('content')
     <div class="row latest-download">
         <div class="container">
-            {{-- <div class="row justify-content-center">
-                <form class="form-inline col-md-6 justify-content-center" action="{{ route('channel.search') }}" method="GET">
-                    <input type="text" class="form-control mx-sm-3 mb-2" name="term">
-                    <button type="submit" class="btn btn-secondary mb-2">{{__('ابحث')}}</button>
+            <div class="row justify-content-center">
+                <form class="form-inline col-md-6 justify-content-center" action="{{ route('channels.search') }}" method="GET">
+                    <input type="text" class="form-control mx-sm-3 mb-3 form-control @error('term') invalid-feedback  is-invalid @enderror" name="term" placeholder="@error('term') {{ $message }} @enderror" >
+                    <button type="" class="btn btn-secondary mb-3">{{__('ابحث')}}</button>
                 </form>
-            </div> --}}
+            </div>
             <hr>
             <br>
             <p class="my-4">{{ $title }}</p>
@@ -22,7 +22,7 @@
                                 <p class="text-center mt-4">{{ $channel->name }}</p>
                             </div>
                             <div class="text-center">
-                                <a href="{{ route('channel.videos', $channel->id) }}" class="btn btn-secondary btn-lg">تصفح القناة</a>
+                                <a href="{{ route('channel.videos', $channel->id) }}" class="btn btn-secondary btn-lg mt-1">{{__('تصفح القناة')}}</a>
                             </div>
                         </div>
                     </div>

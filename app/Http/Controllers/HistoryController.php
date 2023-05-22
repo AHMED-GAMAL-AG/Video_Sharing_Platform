@@ -16,7 +16,7 @@ class HistoryController extends Controller
     public function index()
     {
         $videos_in_history = auth()->user()->history->sortByDesc('pivot.created_at');
-        $title = __('سجل المشاهدة');
+        $title = __('سجل المشاهدة :');
 
         return view('history.index', compact('videos_in_history', 'title'));
     }

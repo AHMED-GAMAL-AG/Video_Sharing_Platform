@@ -7,7 +7,7 @@
                 <form class="form-inline col-md-6 justify-content-center" method="POST" action="{{route('history.clear')}}" onsubmit="return confirm('{{ __('هل أنت متأكد أنك تريد حذف السجل بشكلٍ كامل؟') }}')">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mb-4">{{ __('تفريغ السجل') }}</button>
+                    <button type="submit" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mb-4">{{ __('تفريغ السجل') }}</button>
                 </form>
             </div>
             <hr>
