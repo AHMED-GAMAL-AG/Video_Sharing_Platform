@@ -33,7 +33,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item  {{ request()->is('/') ? 'active' : '' }}">
-                        <a class="nav-link" href="">
+                        <a class="nav-link" href="/">
                             <i class="fas fa-home"></i>
                             {{ __('الصفحة الرئيسية') }}
                         </a>

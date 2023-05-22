@@ -4,6 +4,7 @@ use App\Http\Controllers\{
     CommentController,
     HistoryController,
     LikeController,
+    MainController,
     VideoController
 };
 use Illuminate\Support\Facades\Route;
@@ -19,9 +20,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::middleware([
     'auth:sanctum',
@@ -32,6 +33,9 @@ Route::middleware([
         return view('layouts.main');
     })->name('dashboard');
 });
+
+Route::get('/', [MainController::class, 'index'])->name('home');
+Route::get('/main/{channel}/videos' , [MainController::class, 'channelVideos'])->name('main.channels.videos');
 
 Route::resource('/videos', VideoController::class);
 Route::get('/video/search', [VideoController::class, 'search'])->name('video.search');
