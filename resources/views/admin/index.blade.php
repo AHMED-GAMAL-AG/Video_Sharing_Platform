@@ -48,4 +48,29 @@
     </div>
 @endsection
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+@section('script')
+    <script>
+        var names = <?php echo $names; ?>;
+        var totalViews = <?php echo $total_views; ?>;
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'bar',
+
+            // The data for our dataset
+            data: {
+                labels: names,
+                datasets: [{
+                    label: 'القنوات الأكثر مشاهدة',
+                    data: totalViews
+                }]
+            },
+
+            // Configuration options go here
+            options: {}
+        });
+    </script>
+@endsection
