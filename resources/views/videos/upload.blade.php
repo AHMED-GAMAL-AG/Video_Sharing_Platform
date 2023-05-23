@@ -8,11 +8,11 @@
                     {{ __('رفع فيديو جديد') }}
                 </div>
 
-                {{-- @if (auth()->user()->block)
-                    <div class="alert alert-danger" role="alert">
+                @if (auth()->user()->block)
+                    <div class="alert alert-danger mt-1" role="alert">
                         {{ __('للأسف لا تستطيع رفع مقاطع فيديو، يرجى التواصل مع الإدارة لمعرفة السبب') }}
                     </div>
-                @else --}}
+                @else
                     <div class="card-body">
                         <form action="{{ route('videos.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
@@ -66,7 +66,7 @@
 
                         </form>
                     </div>
-                {{-- @endif --}}
+                @endif
             </div>
         </div>
     </div>
@@ -92,9 +92,9 @@
 
                 reader.readAsDataURL(input.files[0]);
                 $(".video-name").html('\
-                        <div class="alert alert-primary">\
-                            تم اختيار مقطع المقطع بنجاح ' + input.files[0].name + '\
-                        </div>');
+                                            <div class="alert alert-primary">\
+                                                تم اختيار مقطع المقطع بنجاح ' + input.files[0].name + '\
+                                            </div>');
             }
         }
     </script>

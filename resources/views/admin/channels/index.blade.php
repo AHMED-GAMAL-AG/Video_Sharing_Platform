@@ -32,20 +32,20 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->isSuperAdmin() ? 'مدير عام' : ($user->isAdmin() ? 'مدير' : 'مستخدم') }}</td>
                             <td>
-                                <form class="ml-4 form-inline" method="POST" action="" style="display:inline-block">
+                                <form class="ml-4 form-inline" method="POST" action="{{ route('channels.update', $user) }}" style="display:inline-block">
                                     @method('patch')
                                     @csrf
                                     <select class="form-control form-control-sm" name="administration_level">
-                                        <option selected disabled>اختر نوعًا</option>
-                                        <option value="0">مستخدم</option>
-                                        <option value="1">مدير</option>
-                                        <option value="2">مدير عام</option>
+                                        <option disabled>اختر نوعًا</option>
+                                        <option value="0" {{ $user->administration_level == 0 ? 'selected' : '' }}>مستخدم</option>
+                                        <option value="1" {{ $user->administration_level == 1 ? 'selected' : '' }}>مدير</option>
+                                        <option value="2" {{ $user->administration_level == 2 ? 'selected' : '' }}>مدير عام</option>
                                     </select>
                                     <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> تعديل</button>
                                 </form>
                             </td>
                             <td>
-                                <form method="POST" action="" style="display:inline-block">
+                                <form method="POST" action="{{ route('channels.delete', $user) }}" style="display:inline-block">
                                     @method('delete')
                                     @csrf
                                     @if (auth()->user() != $user && !$user->isSuperAdmin())
@@ -56,7 +56,7 @@
                                 </form>
                             </td>
                             <td>
-                                <form method="POST" action="" style="display:inline-block">
+                                <form method="POST" action="{{ route('channels.block', $user) }}" style="display:inline-block">
                                     @method('patch')
                                     @csrf
                                     @if (auth()->user() != $user && !$user->isSuperAdmin())

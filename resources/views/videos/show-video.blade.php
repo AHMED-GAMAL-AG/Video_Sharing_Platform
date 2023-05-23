@@ -100,17 +100,19 @@
                                                 <div class="col-10">
                                                     @if (Auth::check())
                                                         @if ($comment->user_id == auth()->user()->id || auth()->user()->administration_level > 0)
-                                                            <form method="GET" action="{{ route('comment.destroy', $comment->id) }}" onsubmit="return confirm('{{ __('هل أنت متأكد أنك تريد حذف التعليق هذا؟') }}')">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="float-left"><i class="far fa-trash-alt text-danger fa-lg"></i></button>
-                                                            </form>
+                                                            @if (!auth()->user()->block)
+                                                                <form method="GET" action="{{ route('comment.destroy', $comment->id) }}" onsubmit="return confirm('{{ __('هل أنت متأكد أنك تريد حذف التعليق هذا؟') }}')">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="float-left"><i class="far fa-trash-alt text-danger fa-lg"></i></button>
+                                                                </form>
 
-                                                            <form method="GET" action="{{ route('comment.edit', $comment->id) }}">
-                                                                @csrf
-                                                                @method('PATCH')
-                                                                <button type="submit" class="float-left"><i class="far fa-edit text-success fa-lg ml-3"></i></button>
-                                                            </form>
+                                                                <form method="GET" action="{{ route('comment.edit', $comment->id) }}">
+                                                                    @csrf
+                                                                    @method('PATCH')
+                                                                    <button type="submit" class="float-left"><i class="far fa-edit text-success fa-lg ml-3"></i></button>
+                                                                </form>
+                                                            @endif
                                                         @endif
                                                     @endif
                                                     <p class="mt-3 mb-2"><strong>{{ $comment->user->name }}</strong></p>
@@ -175,15 +177,26 @@
             var videoId = 0;
 
             var AuthUser = "{{ Auth::user() ? 0 : 1 }}";
+            var blocked = "{{ Auth::user() ? (Auth::user()->block ? 1 : 0) : 2 }}"; // 1 blocked, 0 not blocked, 2 not logged in
+
 
             if (AuthUser == '1') { // log in alert
                 event.preventDefault();
                 var html = '<div class="alert alert-danger">\
-                                                                                                                            <ul>\
-                                                                                                                                <li class="loginAlert">يجب تسجيل الدخول لكي تستطيع الإعجاب بالمقطع</li>\
-                                                                                                                            </ul>\
-                                                                                                                        </div>';
+                                                                                                                                            <ul>\
+                                                                                                                                                <li class="loginAlert">يجب تسجيل الدخول لكي تستطيع الإعجاب بالمقطع</li>\
+                                                                                                                                            </ul>\
+                                                                                                                                        </div>';
                 $(".loginAlert").html(html);
+            } else if (blocked == '1') {
+                event.preventDefault();
+                var html = '<div class="alert alert-danger">\
+                                <ul>\
+                                    <li class="loginAlert">أنت ممنوع من الإعجاب</li>\
+                                </ul>\
+                            </div>';
+                $(".loginAlert").html(html);
+
             } else {
                 event.preventDefault(); // to prevent the page from going up when clicking on the like button
                 videoId = $("#videoId").val();
@@ -259,21 +272,30 @@
             var videoId = 0;
 
             var AuthUser = "{{ Auth::user() ? 0 : 1 }}";
+            var blocked = "{{ Auth::user() ? (Auth::user()->block ? 1 : 0) : 2 }}"; // 1 blocked, 0 not blocked, 2 not logged in
 
             if (AuthUser == '1') { // if user is authenticated
                 event.preventDefault();
                 var html = '<div class="alert alert-danger">\
-                                                                <ul>\
-                                                                    <li>يجب تسجيل الدخول لكي تستطيع التعليق على المقطع</li>\
-                                                                </ul>\
-                                                            </div>';
+                                                                                <ul>\
+                                                                                    <li>يجب تسجيل الدخول لكي تستطيع التعليق على المقطع</li>\
+                                                                                </ul>\
+                                                                            </div>';
                 $(".commentAlert ").html(html);
+            } else if (blocked == '1') {
+                var html = '<div class="alert alert-danger">\
+                            <ul>\
+                                <li class="commentAlert">أنت ممنوع من التعليق</li>\
+                            </ul>\
+                        </div>';
+                $(".commentAlert ").html(html);
+
             } else if ($('#comment').val().length == 0) { // if the comment is  empty
                 var html = '<div class="alert alert-danger">\
-                                                                <ul>\
-                                                                    <li>الرجاء كتابة تعليق</li>\
-                                                                </ul>\
-                                                            </div>';
+                                                                                <ul>\
+                                                                                    <li>الرجاء كتابة تعليق</li>\
+                                                                                </ul>\
+                                                                            </div>';
                 $(".commentAlert ").html(html);
             } else { // if the user is authenticated and the comment is not empty
                 $(".commentAlert ").html(''); // delete the alerts if found
@@ -299,29 +321,29 @@
                         url = editUrl.replace('id', data.commentId);
 
                         var html = '  <div class="card mt-5 mb-3">\
-                                                        <div class="card-body">\
-                                                            <div class="row">\
-                                                                <div class="col-2">\
-                                                                    <img src="' + data.userImage + '" width="150px" class="rounded-full"/>\
-                                                                </div>\
-                                                                <div class="col-10">\
-                                                                    <form method="GET" action="' + destroy + '">\
-                                                                        @csrf\
-                                                                        @method('DELETE')\
-                                                                        <button type="submit" class="float-left"><i class="far fa-trash-alt text-danger fa-lg"></i></button>\
-                                                                    </form>\
-                                                                    <form method="GET" action="' + url + '">\
-                                                                        @csrf\
-                                                                        @method('PATCH')\
-                                                                        <button type="submit" class="float-left"><i class="far fa-edit text-success fa-lg ml-3"></i></button>\
-                                                                    </form>\
-                                                                    <p class="mt-3 mb-2"><strong>' + data.userName + '</strong></p>\
-                                                                    <i class="far fa-clock"></i> <span class="comment_date text-secondary">' + data.commentDate + '</span>\
-                                                                    <p class="mt-3" >' + comment + '</p>\
-                                                                </div>\
-                                                            </div>\
-                                                        </div>\
-                                                    </div>';
+                                                                        <div class="card-body">\
+                                                                            <div class="row">\
+                                                                                <div class="col-2">\
+                                                                                    <img src="' + data.userImage + '" width="150px" class="rounded-full"/>\
+                                                                                </div>\
+                                                                                <div class="col-10">\
+                                                                                    <form method="GET" action="' + destroy + '">\
+                                                                                        @csrf\
+                                                                                        @method('DELETE')\
+                                                                                        <button type="submit" class="float-left"><i class="far fa-trash-alt text-danger fa-lg"></i></button>\
+                                                                                    </form>\
+                                                                                    <form method="GET" action="' + url + '">\
+                                                                                        @csrf\
+                                                                                        @method('PATCH')\
+                                                                                        <button type="submit" class="float-left"><i class="far fa-edit text-success fa-lg ml-3"></i></button>\
+                                                                                    </form>\
+                                                                                    <p class="mt-3 mb-2"><strong>' + data.userName + '</strong></p>\
+                                                                                    <i class="far fa-clock"></i> <span class="comment_date text-secondary">' + data.commentDate + '</span>\
+                                                                                    <p class="mt-3" >' + comment + '</p>\
+                                                                                </div>\
+                                                                            </div>\
+                                                                        </div>\
+                                                                    </div>';
                         $(".commentBody").prepend(html);
                     }
                 })

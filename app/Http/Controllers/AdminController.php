@@ -39,4 +39,34 @@ class AdminController extends Controller
         $users = User::all();
         return view('admin.channels.index', compact('users'));
     }
+
+    public function adminUpdate(Request $request, User $user)
+    {
+        $request->validate([
+            'administration_level' => 'required'
+        ]);
+        $user->administration_level = $request->administration_level;
+        $user->save();
+
+        session()->flash('flash_message', 'تم تحديث الصلاحيات القناة بنجاح');
+        return redirect()->route('channels.index');
+    }
+
+    public function adminDelete(User $user)
+    {
+        $user->delete();
+
+        session()->flash('flash_message', 'تم حذف القناة بنجاح');
+        return redirect()->route('channels.index');
+    }
+
+    public function adminBlock(Request $request, User $user)
+    {
+        $user->block = 1;
+        $user->save();
+
+        session()->flash('flash_message', 'تم حظر القناة بنجاح');
+        return redirect()->route('channels.index');
+    }
+
 }
