@@ -60,4 +60,5 @@ Route::get('/channels/search', [ChannelController::class, 'search'])->name('chan
 
 Route::prefix('/admin')->middleware('can:update-videos')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/channels', [AdminController::class, 'adminIndex'])->name('channels.index');
 });

@@ -33,4 +33,10 @@ class AdminController extends Controller
 
         return view('admin.index', compact('number_of_videos', 'number_of_channels'))->with('names', json_encode($names, JSON_NUMERIC_CHECK))->with('total_views', json_encode($total_views, JSON_NUMERIC_CHECK));
     }
+
+    public function adminIndex() // show the channels
+    {
+        $users = User::all();
+        return view('admin.channels.index', compact('users'));
+    }
 }
