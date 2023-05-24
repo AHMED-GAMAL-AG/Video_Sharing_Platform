@@ -48,9 +48,9 @@
     </div>
 @endsection
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 @section('script')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
         var names = <?php echo $names; ?>;
         var totalViews = <?php echo $total_views; ?>;

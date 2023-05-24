@@ -47,8 +47,8 @@
         </li>
 
         <!-- Nav Item - Charts -->
-        <li class="nav-item {{ request()->is('admin/MostViewedVideos*') ? 'active' : '' }}">
-            <a class="nav-link text-right" href="">
+        <li class="nav-item {{ request()->is('admin/top-viewed-videos*') ? 'active' : '' }}">
+            <a class="nav-link text-right" href="{{route('channels.top-viewed')}}">
                 <i class="fas fa-table"></i>
                 <span>الفيديوهات الأكثر مشاهدة</span></a>
         </li>

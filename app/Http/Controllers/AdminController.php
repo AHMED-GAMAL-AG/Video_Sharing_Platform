@@ -22,6 +22,7 @@ class AdminController extends Controller
             ->take(5)
             ->get();
 
+        // to show in the chart.js
         $names = [];
         $total_views = [];
         foreach ($most_views as $view) {
@@ -92,5 +93,25 @@ class AdminController extends Controller
         $channels = User::all();
 
         return view('admin.channels.all', compact('channels'));
+    }
+
+    public function topViewed()
+    {
+        $top_viewed_videos = View::orderBy('views_number', 'desc')
+            ->take(10)
+            ->get(['video_id', 'views_number', 'user_id']);
+
+        // to show in the chart.js
+        $video_names = [];
+        $video_views = [];
+
+        foreach ($top_viewed_videos as $view) {
+            $video = Video::find($view->video_id);
+
+            array_push($video_names, $video->title);
+            array_push($video_views, $view->views_number);
+        }
+
+        return view('admin.top-views', compact('top_viewed_videos'))->with('video_names', json_encode($video_names, JSON_NUMERIC_CHECK))->with('video_views', json_encode($video_views, JSON_NUMERIC_CHECK));
     }
 }
