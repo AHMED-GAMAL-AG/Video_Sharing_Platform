@@ -178,6 +178,8 @@
             cluster: 'eu'
         });
     </script>
+    <script src="{{ asset('js/push-notification.js') }}"></script>
+    <script src="{{ asset('js/failed-notification.js') }}"></script>
 
     {{-- Get The Notifications from the database --}}
     <script>
@@ -210,28 +212,28 @@
 
                         if (item.success) {
                             responseNotifications += '<a class="dropdown-item d-flex align-items-center" href="#">\
-                                                                    <div class="ml-3">\
-                                                                        <div class="icon-circle bg-secondary">\
-                                                                            <i class="far fa-bell text-white"></i>\
+                                                                        <div class="ml-3">\
+                                                                            <div class="icon-circle bg-secondary">\
+                                                                                <i class="far fa-bell text-white"></i>\
+                                                                            </div>\
                                                                         </div>\
-                                                                    </div>\
-                                                                    <div>\
-                                                                        <div class="small text-gray-500">' + date + ' الساعة ' + time + '</div>\
-                                                                        <span>لقد تم معالجة مقطع الفيديو <b>' + item.notification + '</b> بنجاح</span>\
-                                                                    </div>\
-                                                                </a>';
-                        } else {
+                                                                        <div>\
+                                                                            <div class="small text-gray-500">' + date + ' الساعة ' + time + '</div>\
+                                                                            <span>لقد تم معالجة مقطع الفيديو <b>' + item.notification + '</b> بنجاح</span>\
+                                                                        </div>\
+                                                                    </a>';
+                        } else { // if failed
                             responseNotifications += '<a class="dropdown-item d-flex align-items-center" href="#">\
-                                                                    <div class="ml-3">\
-                                                                        <div class="icon-circle bg-secondary">\
-                                                                            <i class="far fa-bell text-white"></i>\
+                                                                        <div class="ml-3">\
+                                                                            <div class="icon-circle bg-secondary">\
+                                                                                <i class="far fa-bell text-white"></i>\
+                                                                            </div>\
                                                                         </div>\
-                                                                    </div>\
-                                                                    <div>\
-                                                                        <div class="small text-gray-500">' + date + ' الساعة ' + time + '</div>\
-                                                                        <span>للأسف حدث خطأ غير متوقع أثناء معالجة مقطع الفيديو <b>' + item.notification + '</b> يرجى رفعه مرة أخرى</span>\
-                                                                    </div>\
-                                                                </a>';
+                                                                        <div>\
+                                                                            <div class="small text-gray-500">' + date + ' الساعة ' + time + '</div>\
+                                                                            <span>للأسف حدث خطأ غير متوقع أثناء معالجة مقطع الفيديو <b>' + item.notification + '</b> يرجى رفعه مرة أخرى</span>\
+                                                                        </div>\
+                                                                    </a>';
                         }
 
                         $('.alert-body').html(responseNotifications);
@@ -240,8 +242,6 @@
             });
         });
     </script>
-
-    <script src="{{ asset('js/push-notification.js') }}"></script>
 
     @yield('script')
 
