@@ -211,10 +211,10 @@ class ConvertVideoForStreaming implements ShouldQueue
 
         event(new RealNotification($data));
 
-        // $alert = Alert::where('user_id', $this->video->user_id)->first();
-
-        // $alert->alert++;
-        // $alert->save();
+        // increment the alert column in the alert table
+        $alert = Alert::where('user_id', $this->video->user_id)->first(); // select the user's alert from the database
+        $alert->alert++;
+        $alert->save();
 
         $this->video->update([
             'processed' => true, // if processed is true then show the video in the website
