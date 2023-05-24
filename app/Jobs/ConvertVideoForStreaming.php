@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Events\RealNotification;
 use App\Models\Alert;
 use App\Models\ConvertedVideo;
 use App\Models\Notification;
@@ -196,17 +197,19 @@ class ConvertVideoForStreaming implements ShouldQueue
 
         $converted_video->save();
 
+        // for send notification to the user
+
         // $notification = new Notification;
 
         // $notification->user_id = $this->video->user_id;
         // $notification->notification = $this->video->title;
         // $notification->save();
 
-        // $data = [
-        //     'video_title' => $this->video->title,
-        // ];
+        $data = [
+            'video_title' => $this->video->title,
+        ];
 
-        // event(new RealNotification($data));
+        event(new RealNotification($data));
 
         // $alert = Alert::where('user_id', $this->video->user_id)->first();
 

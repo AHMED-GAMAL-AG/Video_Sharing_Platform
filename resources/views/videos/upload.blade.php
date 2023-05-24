@@ -60,7 +60,7 @@
 
                             <div class="form-group row">
                                 <div class="col-md-4">
-                                    <button type="submit" class="btn btn-secondary">{{ __('رفع المقطع') }}</button>
+                                    <button type="" class="btn btn-secondary">{{ __('رفع المقطع') }}</button>
                                 </div>
                             </div>
 

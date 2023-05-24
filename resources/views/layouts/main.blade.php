@@ -27,7 +27,7 @@
 <body dir="rtl" style="text-align: right">
     <div>
         <nav class="navbar navbar-expand-lg navbar-light bg-light bg-white">
-            <a class="navbar-brand" href="#">{{ __('يتيوب الغلابة') }}</a>
+            <a class="navbar-brand" href="/">{{ __('يتيوب الغلابة') }}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -75,6 +75,7 @@
                 <ul class="navbar-nav mr-auto">
                     <div class="topbar" style="z-index:1">
                         @auth
+                            {{-- The Notifications is send from the push-notification.js --}}
                             <!-- Nav Item - Alerts -->
                             <li class="nav-item dropdown no-arrow alert-dropdown mx-1">
                                 <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -177,7 +178,10 @@
             cluster: 'eu'
         });
     </script>
+    <script src="{{ asset('js/push-notification.js') }}"></script>
+
     @yield('script')
+
 </body>
 
 </html>
