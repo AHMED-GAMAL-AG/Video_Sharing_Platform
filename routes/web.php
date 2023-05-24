@@ -64,4 +64,6 @@ Route::prefix('/admin')->middleware('can:update-videos')->group(function () {
     Route::patch('/channels/{user}', [AdminController::class, 'adminUpdate'])->name('channels.update')->can('update-users');
     Route::delete('/channels/{user}', [AdminController::class, 'adminDelete'])->name('channels.delete')->can('update-users');
     Route::patch('/block/{user}', [AdminController::class, 'adminBlock'])->name('channels.block')->can('update-users');
+    Route::get('/blocked', [AdminController::class, 'blockedChannels'])->name('channels.blocked');
+    Route::patch('/unblock/{user}', [AdminController::class, 'unblock'])->name('channels.unblock');
 });

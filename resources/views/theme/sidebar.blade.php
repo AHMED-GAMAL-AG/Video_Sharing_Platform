@@ -14,7 +14,7 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
-            <a class="nav-link text-right" href="">
+            <a class="nav-link text-right" href="/admin">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>الإحصائيات</span></a>
         </li>
@@ -31,8 +31,8 @@
         </li>
 
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item {{ request()->is('admin/channels/blocked*') ? 'active' : '' }}">
-            <a class="nav-link text-right" href="">
+        <li class="nav-item {{ request()->is('admin/blocked*') ? 'active' : '' }}">
+            <a class="nav-link text-right" href="{{route('channels.blocked')}}">
                 <i class="fas fa-lock"></i>
                 <span>القنوات المحظورة</span>
             </a>

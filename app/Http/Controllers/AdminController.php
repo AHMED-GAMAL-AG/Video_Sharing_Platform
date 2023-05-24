@@ -69,4 +69,21 @@ class AdminController extends Controller
         return redirect()->route('channels.index');
     }
 
+    public function blockedChannels(User $user) // show the blocked channels
+    {
+        $channels = User::where('block', 1)->get();
+
+        return view('admin.channels.blocked', compact('channels'));
+    }
+
+    public function unblock(User $user)
+    {
+        $user->block = 0;
+        $user->save();
+
+        // session()->flash('flash_message', 'تم فك حظر القناة بنجاح');
+        // return redirect()->route('channels.blocked');
+
+        return back()->with('flash_message', 'تم فك حظر القناة بنجاح');
+    }
 }
