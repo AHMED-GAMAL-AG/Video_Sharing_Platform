@@ -88,7 +88,7 @@
                                     <div class="alert-body">
 
                                     </div>
-                                    <a class="dropdown-item text-center small text-gray-500" href="">عرض جميع الإشعارات</a>
+                                    <a class="dropdown-item text-center small text-gray-500" href="{{route('all.notifications')}}">عرض جميع الإشعارات</a>
                                 </div>
                             </li>
                         @endauth

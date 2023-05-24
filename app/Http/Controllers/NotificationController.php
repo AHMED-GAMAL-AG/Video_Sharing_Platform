@@ -23,4 +23,12 @@ class NotificationController extends Controller
 
         return response()->json(['notifications' => $items]);
     }
+
+    public function allNotifications()
+    {
+        $notifications = auth()->user()->notifications->sortByDesc('created_at');
+        $title = __('جميع الإشعارات :');
+
+        return view('notifications.show', compact('notifications', 'title'));
+    }
 }
