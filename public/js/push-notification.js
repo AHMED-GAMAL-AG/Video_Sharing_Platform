@@ -18,7 +18,7 @@ channel.bind('App\\Events\\RealNotification', function (data) {
                                     </div>\
                                     <div>\
                                         <div class="small text-gray-500">' + data.date + '</div>\
-                                        <span>تهانينا لقد تم معالجة مقطع الفيديو <b>' + data.video_title + '</b> بنجاح</span>\
+                                        <span>لقد تم معالجة مقطع الفيديو <b>' + data.video_title + '</b> بنجاح</span>\
                                     </div>\
                                 </a>';
     notifications.html(newNotificationHtml + existingNotifications);

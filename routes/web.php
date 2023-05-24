@@ -7,6 +7,7 @@ use App\Http\Controllers\{
     HistoryController,
     LikeController,
     MainController,
+    NotificationController,
     VideoController
 };
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,7 @@ Route::delete('/history', [HistoryController::class, 'clear'])->name('history.cl
 Route::get('/channels', [ChannelController::class, 'index'])->name('channel.index');
 Route::get('/channels/search', [ChannelController::class, 'search'])->name('channels.search');
 
+Route::post('/notifications', [NotificationController::class, 'index'])->name('notification');
 
 Route::prefix('/admin')->middleware('can:update-videos')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');

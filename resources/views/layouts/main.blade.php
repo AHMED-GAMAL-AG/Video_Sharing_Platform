@@ -178,6 +178,69 @@
             cluster: 'eu'
         });
     </script>
+
+    {{-- Get The Notifications from the database --}}
+    <script>
+        var token = '{{ Session::token() }}';
+        var urlNotify = '{{ route('notification') }}';
+
+        $('#alertsDropdown').on('click', function(event) {
+            event.preventDefault();
+            var notificationsWrapper = $('.alert-dropdown');
+            var notificationsToggle = notificationsWrapper.find('a[data-toggle]');
+            var notificationsCountElem = notificationsToggle.find('span[data-count]');
+
+            notificationsCount = 0;
+            notificationsCountElem.attr('data-count', notificationsCount);
+            notificationsWrapper.find('.notif-count').text(notificationsCount);
+            notificationsWrapper.show();
+
+            $.ajax({
+                method: 'POST',
+                url: urlNotify,
+                data: {
+                    _token: token
+                },
+                success: function(data) {
+                    var responseNotifications = "";
+                    $.each(data.notifications, function(i, item) {
+                        var responseDate = new Date(item.created_at);
+                        var date = responseDate.getFullYear() + '-' + (responseDate.getMonth() + 1) + '-' + responseDate.getDate();
+                        var time = responseDate.getHours() + ":" + responseDate.getMinutes() + ":" + responseDate.getSeconds();
+
+                        if (item.success) {
+                            responseNotifications += '<a class="dropdown-item d-flex align-items-center" href="#">\
+                                                                <div class="ml-3">\
+                                                                    <div class="icon-circle bg-secondary">\
+                                                                        <i class="far fa-bell text-white"></i>\
+                                                                    </div>\
+                                                                </div>\
+                                                                <div>\
+                                                                    <div class="small text-gray-500">' + date + ' الساعة ' + time + '</div>\
+                                                                    <span>لقد تم معالجة مقطع الفيديو <b>' + item.notification + '</b> بنجاح</span>\
+                                                                </div>\
+                                                            </a>';
+                        } else {
+                            responseNotifications += '<a class="dropdown-item d-flex align-items-center" href="#">\
+                                                                <div class="ml-3">\
+                                                                    <div class="icon-circle bg-secondary">\
+                                                                        <i class="far fa-bell text-white"></i>\
+                                                                    </div>\
+                                                                </div>\
+                                                                <div>\
+                                                                    <div class="small text-gray-500">' + date + ' الساعة ' + time + '</div>\
+                                                                    <span>للأسف حدث خطأ غير متوقع أثناء معالجة مقطع الفيديو <b>' + item.notification + '</b> يرجى رفعه مرة أخرى</span>\
+                                                                </div>\
+                                                            </a>';
+                        }
+
+                        $('.alert-body').html(responseNotifications);
+                    });
+                }
+            });
+        });
+    </script>
+
     <script src="{{ asset('js/push-notification.js') }}"></script>
 
     @yield('script')

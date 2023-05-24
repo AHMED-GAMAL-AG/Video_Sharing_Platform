@@ -199,11 +199,11 @@ class ConvertVideoForStreaming implements ShouldQueue
 
         // for send notification to the user
 
-        // $notification = new Notification;
+        $notification = new Notification;
 
-        // $notification->user_id = $this->video->user_id;
-        // $notification->notification = $this->video->title;
-        // $notification->save();
+        $notification->user_id = $this->video->user_id;
+        $notification->notification = $this->video->title;
+        $notification->save();
 
         $data = [
             'video_title' => $this->video->title,
