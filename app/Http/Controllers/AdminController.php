@@ -86,4 +86,11 @@ class AdminController extends Controller
 
         return back()->with('flash_message', 'تم فك حظر القناة بنجاح');
     }
+
+    public function allChannels()
+    {
+        $channels = User::all();
+
+        return view('admin.channels.all', compact('channels'));
+    }
 }

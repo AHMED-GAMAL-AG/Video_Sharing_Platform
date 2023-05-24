@@ -28,7 +28,7 @@ class MainController extends Controller
 
         // $videos = $channel->videos()->paginate(16);
         $videos = Video::where('user_id' , $channel->id)->get();
-        $title = __('جميع المقاطع الخاصة بالقناة :channel', ['channel' => $channel->name]);
+        $title = __('جميع المقاطع الخاصة بالقناة: :channel', ['channel' => $channel->name]);
 
         return view('videos.my-videos', compact('videos', 'title'));
     }

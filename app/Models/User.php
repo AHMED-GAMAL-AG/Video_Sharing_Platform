@@ -86,7 +86,7 @@ class User extends Authenticatable
 
     public function history()
     {
-        return $this->belongsToMany(Video::class , 'video_user' , 'user_id' , 'video_id')->withTimestamps()->withPivot('id'); // video_user pivot table user can watch many videos and video can be watched by many users
+        return $this->belongsToMany(Video::class, 'video_user', 'user_id', 'video_id')->withTimestamps()->withPivot('id'); // video_user pivot table user can watch many videos and video can be watched by many users
     }
 
     public function isAdmin()
@@ -97,5 +97,10 @@ class User extends Authenticatable
     public function isSuperAdmin()
     {
         return $this->administration_level > 1 ? true : false;
+    }
+
+    public function views()
+    {
+        return $this->hasMany(View::class);
     }
 }
