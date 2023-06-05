@@ -1,66 +1,61 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## video sharing website
+a YouTube-like website for sharing videos, creating channels, etc...
+you can find an installation guide bellow.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## screenshots
 
-## About Laravel
+show the most viewed videos on the home page :
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+![image](https://github.com/AHMED-GAMAL-AG/Video_Sharing_Platform/assets/76778937/09dd5383-42a5-48f5-902e-59712c6f1932)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+the user can change the quality of a video, interact (like/dislike), comment, delete, or edit his comment :
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+![image](https://github.com/AHMED-GAMAL-AG/Video_Sharing_Platform/assets/76778937/0e4e3631-6694-4911-8e8a-36188dea55cf)
+![image](https://github.com/AHMED-GAMAL-AG/Video_Sharing_Platform/assets/76778937/915aa07d-cfc1-422f-9015-e1880eb2eef7)
 
-## Learning Laravel
+the user can view the watch history, remove a video from the history, or empty it :
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+![image](https://github.com/AHMED-GAMAL-AG/Video_Sharing_Platform/assets/76778937/26e5776a-b191-43d7-bfc4-7e7334b3ca44)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+the user can upload a video to his channel and use the website while the video is processed and uploaded in the background :
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+![image](https://github.com/AHMED-GAMAL-AG/Video_Sharing_Platform/assets/76778937/d88d51d5-0b6c-4438-9093-fa4c62e3bac0)
+![image](https://github.com/AHMED-GAMAL-AG/Video_Sharing_Platform/assets/76778937/c2b7a65a-ed41-4c22-8c2d-9ff26974df19)
 
-## Laravel Sponsors
+the user can view the video on his channel and get a notification that the video is uploaded :
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+![image](https://github.com/AHMED-GAMAL-AG/Video_Sharing_Platform/assets/76778937/f744f69a-6b37-4dd1-8359-368aba68b222)
 
-### Premium Partners
+the user can view recent channels :
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+![image](https://github.com/AHMED-GAMAL-AG/Video_Sharing_Platform/assets/76778937/28548300-2de6-461f-b931-d81f8f2f8185)
 
-## Contributing
+the user can search for channels or videos :
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+![image](https://github.com/AHMED-GAMAL-AG/Video_Sharing_Platform/assets/76778937/38a57339-6f71-40e4-994b-5c9ea9afde52)
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+the admin can access the dashboard and view the analytics of the website (videos/channels count) and a Graph with the most viewed videos on the website :
 
-## Security Vulnerabilities
+![image](https://github.com/AHMED-GAMAL-AG/Video_Sharing_Platform/assets/76778937/bb5ae55d-4def-4189-8280-0dc42047445e)
+![image](https://github.com/AHMED-GAMAL-AG/Video_Sharing_Platform/assets/76778937/70e8e84d-98f8-4186-ac60-f06a544474a9)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+the admin can make any user administrator or normal user, delete, or block a user :
+![image](https://github.com/AHMED-GAMAL-AG/Video_Sharing_Platform/assets/76778937/cd321c55-0204-4e93-91dd-aa927a12503b)
 
-## License
+the admin can view the statistics of the channels :
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+![image](https://github.com/AHMED-GAMAL-AG/Video_Sharing_Platform/assets/76778937/13cfeb5a-5e41-4ccc-95e0-35cfb1377e6b)
+
+## installation
+
+<ul>
+<li><code>git clone https://github.com/AHMED-GAMAL-AG/Video_Sharing_Platform.git</code></li>
+<li><code>Create a .env file and configure the database.</code></li>
+<li><code>composer install</code></li>
+<li><code>npm install</code></li>
+<li><code>php artisan key:generate</code></li>
+<li><code>php artisan migrate --seed</code></li>
+<li><code>php artisan storage:link</code></li>
+</ul>
+
