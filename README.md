@@ -51,7 +51,7 @@ the admin can view the statistics of the channels :
 
 <ul>
 <li><code>git clone https://github.com/AHMED-GAMAL-AG/Video_Sharing_Platform.git</code></li>
-<li>Create a .env file and configure the database. </li>
+<li><code>Create a .env file and configure the database.</code></li>
 <li><code>composer install</code></li>
 <li><code>npm install</code></li>
 <li><code>php artisan key:generate</code></li>
