@@ -1,5 +1,6 @@
 ## video sharing website
 a YouTube-like website for sharing videos, creating channels, etc...
+you can find an installation guide bellow.
 
 ## screenshots
 
@@ -46,5 +47,15 @@ the admin can view the statistics of the channels :
 
 ![image](https://github.com/AHMED-GAMAL-AG/Video_Sharing_Platform/assets/76778937/13cfeb5a-5e41-4ccc-95e0-35cfb1377e6b)
 
+## installation
 
+<ul>
+<li><code>git clone https://github.com/AHMED-GAMAL-AG/Video_Sharing_Platform.git</code></li>
+<li>Create a .env file and configure the database. </li>
+<li><code>composer install</code></li>
+<li><code>npm install</code></li>
+<li><code>php artisan key:generate</code></li>
+<li><code>php artisan migrate --seed</code></li>
+<li><code>php artisan storage:link</code></li>
+</ul>
 
