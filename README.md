@@ -1,5 +1,5 @@
 ## video sharing website
-a YouTube-like website with strong administration capabalites  for sharing videos, creating channels, etc..., uses Amazon S3 as storage.
+A YouTube-like website with strong administration capabilities for sharing videos, creating channels, etc..., uses Amazon S3 as storage.
 
 you can find an installation guide bellow.
 
