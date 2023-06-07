@@ -35,6 +35,11 @@ the user can search for channels or videos :
 
 ![image](https://github.com/AHMED-GAMAL-AG/Video_Sharing_Platform/assets/76778937/38a57339-6f71-40e4-994b-5c9ea9afde52)
 
+the user can update his information, change password, activate two-factor authentication ,manage sessions on other browsers, delete the account from the edit account page :
+
+![image](https://github.com/AHMED-GAMAL-AG/instagram_demo/assets/76778937/3bbaaa81-e376-419b-ac48-c30c83c27e87)
+![image](https://github.com/AHMED-GAMAL-AG/instagram_demo/assets/76778937/bebbbd92-4deb-47b7-ad1f-f7d1cfe41792)
+![image](https://github.com/AHMED-GAMAL-AG/instagram_demo/assets/76778937/0a1efacf-50a4-4c82-98d8-e436af08c4e4)
 
 the admin can access the dashboard and view the analytics of the website (videos/channels count) and a Graph with the most viewed videos on the website :
 
